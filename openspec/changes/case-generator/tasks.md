@@ -9,7 +9,7 @@
 ## 2. Wrong Delivery content
 
 - [x] 2.1 Write `game/case/templates/wrong_delivery.json`: 5 NPCs with GDD §6 attitude pools, 3 variants (GDD §5 A/B/C) with 2–4 one-line chain facts, holders and fix space, and at least 3 red herrings; all fictional; verify a GUT test loads it and checks the "Shipped template loads" and "Variant shape" scenarios
-- [ ] 2.2 Harry content check: read the three chains and confirm each one leads from the symptom to its root cause and the red herrings are believable; verify by Harry's OK recorded in the change notes (wording fixes after this go in `playtest/tuning-log.md`)
+- [x] 2.2 Harry content check: read the three chains and confirm each one leads from the symptom to its root cause and the red herrings are believable; verify by Harry's OK recorded in the change notes (wording fixes after this go in `playtest/tuning-log.md`)
 
 ## 3. Generator
 

@@ -34,12 +34,13 @@ Seeds 1–300 on the shipped template: `lost_in_translation` 99, `chat_only_chan
 
 ### Content check (task 2.2)
 
-Pending Harry's review of the three chains and the red herrings in
-`game/case/templates/wrong_delivery.json`.
+2026-11-27: Harry read the three chains and the four red herrings in
+`game/case/templates/wrong_delivery.json`. Result: **OK**. Later wording fixes go in
+`playtest/tuning-log.md`.
 
 ## Devlog
 
 - 2026-11-27: "Wrong Delivery" template (3 variants, 5 NPCs, 4 red herrings) and a seeded
   case generator built test-first; 103/103 GUT tests pass.
 - Seeds 42 and 1234 give identical Truth Sheets on desktop and web.
-- Waiting on Harry's content check before PR.
+- Harry approved the case content (task 2.2).
