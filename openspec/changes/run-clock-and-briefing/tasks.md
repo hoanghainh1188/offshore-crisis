@@ -36,7 +36,7 @@
 - [x] 6.1 Run the full GUT suite headless; verify 0 failures
 - [x] 6.2 Export with `godot --headless --path game --export-release "Web" ../build/web/index.html`; verify the command exits 0
 - [x] 6.3 Serve `build/web/` and play one run with `investigation_seconds` set to 60 locally (not committed): briefing → Start → clock moves 09:00 → 17:00 → meeting screen; also hide the tab for ~10 s and record what the clock does; verify no console errors and record results in the change notes
-- [ ] 6.4 Walk through every scenario in `specs/run-flow/spec.md`, `specs/run-clock/spec.md` and the modified `specs/player-movement/spec.md` on the web build (the default 15:00 run at least once); verify all pass and record pass or fail in the change notes
+- [x] 6.4 Walk through every scenario in `specs/run-flow/spec.md`, `specs/run-clock/spec.md` and the modified `specs/player-movement/spec.md` on the web build (the default 15:00 run at least once); verify all pass and record pass or fail in the change notes
 
 ## Workflow follow-up
 

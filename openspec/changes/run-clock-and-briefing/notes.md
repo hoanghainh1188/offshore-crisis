@@ -33,17 +33,16 @@ frame) and switched to the meeting screen.
 - Console: only `GL_INVALID_FRAMEBUFFER_OPERATION ... Attachment has zero size` warnings,
   caused by the hidden pane having zero size. No errors.
 
-### Not done yet (task 6.4)
+### Scenario walk-through (task 6.4)
 
-The scenario walk-through on a **visible** web build, including one default 15:00 run, still
-needs a person watching: the agent's browser pane was hidden for this session, so timing on
-web could not be measured there. Every scenario is covered by GUT tests; the visible web pass
-is left for Harry / Antigravity.
+2026-11-27: Harry ran every scenario in `specs/run-flow`, `specs/run-clock` and the
+modified `specs/player-movement` on a visible web build, including one default 15:00 run.
+Result: **pass**.
 
 ## Devlog
 
 - 2026-11-27: Briefing → office → meeting flow and the 09:00–17:00 run clock (pause by
   reason, one-shot time up) built test-first; 69/69 GUT tests pass, web build exports.
 - Run swaps child screens instead of changing scenes, so the whole flow runs in GUT.
-- Hidden browser tabs slow the clock rather than jumping it; visible 15:00 web run still to
-  check (task 6.4).
+- Hidden browser tabs slow the clock rather than jumping it; Harry passed the visible
+  15:00 web run (task 6.4).
