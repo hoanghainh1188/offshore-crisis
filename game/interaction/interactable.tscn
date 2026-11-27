@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://interaction/interactable.gd" id="1_interactable"]
+
+[node name="Interactable" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_interactable")
+
+[node name="Visual" type="Polygon2D" parent="."]
+
+[node name="BodyShape" type="CollisionShape2D" parent="."]
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+
+[node name="AreaShape" type="CollisionShape2D" parent="InteractionArea"]
+
+[node name="NameLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 12.0
+theme_override_colors/font_color = Color(0.15, 0.15, 0.2, 1)
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 1
