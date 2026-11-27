@@ -5,7 +5,7 @@ that adds the asset.
 
 | Asset | Author | Source URL | License | Files |
 |---|---|---|---|---|
-| _(none yet)_ | | | | |
+| Noto Sans JP (Regular, subset) | Google, Adobe | https://github.com/google/fonts/tree/main/ofl/notosansjp | SIL OFL 1.1 | `game/fonts/noto_sans_jp_subset.ttf`, `game/fonts/OFL.txt` (rebuild: `game/fonts/README.md`) |
 
 ## Code dependencies (vendored)
 

@@ -96,9 +96,10 @@ Time up needs no code: `Run` frees the office, and the viewer goes with it.
   dependency) to Basic Latin, Latin-1, general punctuation, hiragana, katakana, and every
   CJK character that appears in `game/case/templates/*.json` and
   `game/artifacts/artifact_filler.json`. Target size well under 1 MB.
-- Files: `game/fonts/noto_sans_jp_subset.otf` + `game/fonts/OFL.txt`; the subset command
-  is recorded in `game/fonts/README.md` so the font can be rebuilt when new Japanese text
-  is added.
+- Files: `game/fonts/noto_sans_jp_subset.ttf` + `game/fonts/OFL.txt`. The source is the
+  variable `NotoSansJP[wght].ttf`, pinned to weight 400 before subsetting, so the output
+  stays TrueType (`.ttf`). The rebuild script is `tools/subset_jp_font.py` (dev tool, not
+  in the game build); `game/fonts/README.md` has the exact commands.
 - Used as `default_font` of `game/artifacts/viewer_theme.tres`, applied only to the
   viewer. No project setting changes. Other screens get it when they first show Japanese.
 
