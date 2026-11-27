@@ -3,7 +3,7 @@
 ## Acceptance check (task 7.1)
 
 Build: Godot 4.7.2, web export (single-threaded), Chromium via Playwright, 2026-11-27.
-GUT: 26 tests, 26 passing.
+GUT: 28 tests, 28 passing (after the QA label fix).
 
 "Web" = checked on the exported web build. "GUT" = covered by an automated test.
 
@@ -43,6 +43,31 @@ right edge and the shelf's left edge as rulers. Range math: sensor radius 4, Lin
 x 214..250, shelf area x 250..290, so both are in range for 246 < x < 254.
 
 **Still open for a human:** a general feel check of walking (speed, sticking at corners).
+
+## Antigravity QA (2026-11-27)
+
+Web build in Chrome (ANGLE Metal), read-only run against both spec files.
+
+- **17 PASS, 0 FAIL, 2 NOT TESTED.** NOT TESTED: "Ids are unique" and "Event fires with
+  target data". Neither is observable from the web build; both are covered by GUT
+  (`test_kind_and_id_pairs_are_unique`, `test_press_next_to_npc_triggers_once`).
+  Note: the QA report calls the event an "EventBus" event. There is no EventBus; the
+  event is the `Player.interaction_triggered` signal (design.md, Decision 4).
+- "Two targets in range" reproduced with the notes.md method: shelf when nearer the
+  shelf, Linh when nearer Linh.
+- Holding E for ~2.5 s: one line; release and press again: one more line.
+- **0 console errors. 104 WebGL warnings** (`bindBuffer: element array buffers can not be
+  bound to a different target`, `bufferSubData: no buffer`). Known Godot GLES3 bug on
+  WebGL2, godotengine/godot#124726, fixed by #124764 for 4.8 and not backported to
+  4.7.x. Nothing fails to render. Keep the pinned 4.7.2; recheck when moving to 4.8.
+- Visual notes (not covered by specs):
+  - Player sprite drawn over the "Meeting Room Screen" name label. **Fixed:** name labels
+    use `z_index = 1`, so every target name draws above the player.
+  - "Trang" label slightly overlaps the bottom edge of the QA desk. **Fixed:** the label
+    sits below Trang (`label_offset = (0, 28)`).
+  - Guarded by `tests/integration/test_name_labels.gd` (fails on the old layout, checked).
+  - Player drawn over the "QA corner" floor label: kept as is (it is floor text).
+    Full draw order (y-sort) comes with the `office-art-pass` change.
 
 ## Notes for reviewers
 

@@ -167,6 +167,7 @@ id = &"trang"
 display_name = "Trang"
 body_size = Vector2(12, 16)
 color = Color(0.75, 0.35, 0.6, 1)
+label_offset = Vector2(0, 28)
 
 [node name="MeetingScreen" parent="Interactables" instance=ExtResource("3_interactable")]
 position = Vector2(617, 200)
