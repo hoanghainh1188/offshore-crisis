@@ -61,8 +61,8 @@ Template shape (abridged):
 
 `CaseTemplateLoader.load_template(path) -> CaseTemplate` (null on failure). It parses the
 JSON, checks every rule in the spec's "Invalid template is refused" requirement, and only
-then builds typed `RefCounted` objects (`CaseTemplate`, `CaseVariant`, `CaseFact`,
-`CaseNpc`). Errors go through `push_error()` with the file path and the problem, and the
+then builds typed `RefCounted` objects (`CaseTemplate`, `CaseTemplate.Variant`, `CaseTemplate.Fact`,
+`CaseTemplate.Npc`). Errors go through `push_error()` with the file path and the problem, and the
 loader also keeps the last error string so tests can assert on it.
 
 Why typed objects after validation: later code gets static typing and never sees a raw
@@ -80,19 +80,21 @@ Why typed objects after validation: later code gets static typing and never sees
   NPC (in template order). Changing the order changes every seed's case, so it is covered
   by a "known seed" regression test.
 - **Solvability** (spec: not all in one place, at least one NPC): after drawing holders,
-  if the rule fails, redraw the chain holders with the same RNG, up to 20 times; the
-  loader also rejects a variant that can never satisfy the rule (every chain fact has only
-  one possible holder and they are all the same, or no chain fact lists an NPC). So the
-  retry always ends, and it stays deterministic.
+  if the rule fails, redraw the chain holders with the same RNG, up to 20 times. If all 20
+  fail, use a fixed valid assignment (one fact on an NPC, one fact moved to another
+  holder). The loader only accepts a variant whose chain holders, taken together, include
+  an NPC and at least two different holders — exactly the condition that makes that fixed
+  assignment always exist. So generation always ends, stays deterministic, and every
+  branch of the fallback has its own unit test.
 
 Alternative: shuffle-free "first valid combination" search. Rejected: it biases towards the
 first holders in the file.
 
 ### 4. `TruthSheet` is a plain typed object with `to_dict()`
 
-Fields: `seed`, `template_id`, `root_cause` (id + description), `chain: Array[CaseFact]`,
+Fields: `seed`, `template_id`, `root_cause` (id + description), `chain: Array[CaseTemplate.Fact]`,
 `knowledge: Dictionary[StringName, String]` (fact id → holder), `attitudes:
-Dictionary[StringName, StringName]` (npc id → attitude), `red_herrings: Array[CaseFact]`,
+Dictionary[StringName, StringName]` (npc id → attitude), `red_herrings: Array[CaseTemplate.Fact]`,
 `fix_space`. `to_dict()` returns plain data, used by the "same seed, same case" test and
 later for the grader prompt and debug logging.
 
@@ -101,7 +103,7 @@ later for the grader prompt and debug logging.
 ```
 game/case/
   templates/wrong_delivery.json
-  case_template.gd          # CaseTemplate, CaseVariant, CaseFact, CaseNpc (inner classes)
+  case_template.gd          # CaseTemplate + inner classes CaseTemplate.Variant / .Fact / .Npc
   case_template_loader.gd   # CaseTemplateLoader
   case_generator.gd         # CaseGenerator
   truth_sheet.gd            # TruthSheet
