@@ -30,15 +30,19 @@ GUT: 26 tests, 26 passing.
 | In range (Linh) | `[interact] npc:linh "Linh"` | `test_every_target_is_reachable_and_interactable` | Pass |
 | Single press (shelf) | `[interact] object:document_shelf "Document Shelf"` once | `test_held_key_echo_does_not_repeat` | Pass |
 | Holding the key (Trang) | Held E 1.5 s: one line | `test_held_key_echo_does_not_repeat` | Pass |
-| Two targets in range | **Not checked on web** (needs pixel-exact standing) | `test_between_linh_and_shelf_nearest_wins` | Pass (GUT) — web check open |
+| Two targets in range | x = 252.27 (both in range, nearer shelf): only the shelf line. Control at x = 248.80 (both in range, nearer Linh): only the Linh line | `test_between_linh_and_shelf_nearest_wins` | Pass |
 | Log line for an NPC | Exact line in browser console | `test_npc_line` | Pass |
 | Log line for an object | `[interact] object:meeting_screen "Meeting Room Screen"` | `test_object_line` | Pass |
 | Web build | All lines appear in the browser console, 0 errors, 0 warnings | — | Pass |
 | Event fires with target data | — | `test_press_next_to_npc_triggers_once` | Pass (GUT) |
 
-**Open for a human / Antigravity check on the web build:** "Two targets in range" (stand
-in the gap between Linh and the Document Shelf, closer to the shelf, press E → only the
-shelf line). Also a general feel check of walking (speed, sticking at corners).
+**How "Two targets in range" was checked on web:** walk up the gap between Linh and the
+shelf, push against the shelf (x = 256, a fixed collision anchor), then tap left for two
+physics frames. The player's x was measured from a device-scale screenshot, using Linh's
+right edge and the shelf's left edge as rulers. Range math: sensor radius 4, Linh area
+x 214..250, shelf area x 250..290, so both are in range for 246 < x < 254.
+
+**Still open for a human:** a general feel check of walking (speed, sticking at corners).
 
 ## Notes for reviewers
 

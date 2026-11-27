@@ -45,7 +45,7 @@
 
 ## 7. Acceptance check
 
-- [ ] 7.1 Walk through every scenario in `specs/player-movement/spec.md` and `specs/world-interaction/spec.md` on the web build and record pass or fail in the change notes; verify all pass
+- [x] 7.1 Walk through every scenario in `specs/player-movement/spec.md` and `specs/world-interaction/spec.md` on the web build and record pass or fail in the change notes; verify all pass
 - [x] 7.2 Run the full GUT suite one last time; verify 0 failures
 
 ## Workflow follow-up
