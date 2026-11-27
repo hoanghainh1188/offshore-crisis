@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="BriefingEmail" format=3]
+
+[ext_resource type="Script" path="res://run/briefing/briefing_email.gd" id="1_email"]
+
+[resource]
+script = ExtResource("1_email")
+sender = "Tanaka Kenji (Project Manager, Kazegumo Logistics)"
+subject = "[URGENT] Acceptance test failed: monthly export"
+body = "Dear Delivery Team,
+
+We started acceptance testing of release 2.3 this morning. I am sorry to say that the monthly export is not what we asked for. Our accounting team cannot use these files at all.
+
+We discussed this feature several times, so we do not understand how this happened.
+
+Please explain at our meeting today at 17:00:
+1. What happened
+2. Why it happened
+3. How you will fix it
+4. How you will make sure it does not happen again
+
+Our director will join the meeting.
+
+Best regards,
+Tanaka Kenji
+Kazegumo Logistics"

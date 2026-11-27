@@ -11,8 +11,12 @@ config_version=5
 [application]
 
 config/name="Offshore Crisis"
-run/main_scene="res://office/office_room.tscn"
+run/main_scene="res://run/run.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[autoload]
+
+GameState="*res://game_state.gd"
 
 [display]
 

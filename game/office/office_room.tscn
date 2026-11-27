@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://office/office_room.gd" id="1_room"]
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="2_player"]
 [ext_resource type="PackedScene" path="res://interaction/interactable.tscn" id="3_interactable"]
+[ext_resource type="PackedScene" path="res://run/hud/office_clock.tscn" id="4_clock"]
 
 [sub_resource type="RectangleShape2D" id="Shape_WallTop"]
 size = Vector2(640, 16)
@@ -183,3 +184,5 @@ position = Vector2(320, 316)
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
 position = Vector2(320, 316)
+
+[node name="OfficeClock" parent="." instance=ExtResource("4_clock")]
