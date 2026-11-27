@@ -1,0 +1,128 @@
+{
+  "id": "wrong_delivery",
+  "title": "Wrong Delivery",
+  "npcs": [
+    { "id": "linh", "name": "Linh", "role": "Dev lead", "attitudes": ["defensive", "honest"] },
+    { "id": "minh", "name": "Minh", "role": "Junior dev", "attitudes": ["nervous"] },
+    { "id": "trang", "name": "Trang", "role": "Tester", "attitudes": ["honest"] },
+    { "id": "hana", "name": "Hana", "role": "Comtor (interpreter)", "attitudes": ["protective", "honest"] },
+    { "id": "tanaka", "name": "Tanaka-san", "role": "Client PM, Kazegumo Logistics", "attitudes": ["indirect"] }
+  ],
+  "variants": [
+    {
+      "id": "lost_in_translation",
+      "description": "Hana translated 月次締め (the monthly closing period) as 'calendar month'. The team built exactly what the English ticket said.",
+      "chain": [
+        {
+          "id": "fact_lit_ticket_calendar",
+          "text": "Ticket OC-142 says: 'Export rows grouped by calendar month.'",
+          "holders": ["artifact:ticket", "npc:linh"]
+        },
+        {
+          "id": "fact_lit_jp_spec_closing",
+          "text": "The Japanese spec says 月次締め: the client's monthly closing period, which ends on the 20th.",
+          "holders": ["artifact:spec_doc", "npc:hana"]
+        },
+        {
+          "id": "fact_lit_unconfirmed_note",
+          "text": "Hana's translation note says '締め unclear, assumed calendar month, to confirm', but nobody asked the client.",
+          "holders": ["npc:hana", "artifact:chat_log"]
+        }
+      ],
+      "fix_space": {
+        "fixes": [
+          "Change the export to group rows by the client's closing period (21st to 20th) and re-deliver.",
+          "Re-run acceptance on the corrected export together with the client's accounting team."
+        ],
+        "prevention": [
+          "Keep a glossary of the client's business terms (締め日, 月次) and use it in every spec translation.",
+          "A translation marked 'to confirm' blocks its ticket until the client answers."
+        ]
+      }
+    },
+    {
+      "id": "chat_only_change",
+      "description": "The client asked for the closing period in chat. Linh agreed, but nobody updated the spec or created a ticket.",
+      "chain": [
+        {
+          "id": "fact_coc_spec_unchanged",
+          "text": "The spec document was last revised before the chat request and still says 'calendar month'.",
+          "holders": ["artifact:spec_doc", "npc:trang"]
+        },
+        {
+          "id": "fact_coc_chat_agreement",
+          "text": "In the shared chat, the client asked to switch the export to the closing period and Linh replied 'OK, will do'.",
+          "holders": ["artifact:chat_log", "npc:linh", "npc:tanaka"]
+        },
+        {
+          "id": "fact_coc_no_ticket",
+          "text": "No ticket was created for the change, so Minh built the export from the original spec.",
+          "holders": ["npc:minh", "artifact:ticket", "artifact:git_log"]
+        }
+      ],
+      "fix_space": {
+        "fixes": [
+          "Build the closing-period export the client asked for in chat and re-deliver.",
+          "Confirm the final requirement with the client in writing before re-delivery."
+        ],
+        "prevention": [
+          "Any change agreed in chat is copied into the spec and a ticket the same day.",
+          "Development starts only from a spec revision that lists every agreed change."
+        ]
+      }
+    },
+    {
+      "id": "polite_yes",
+      "description": "The team took Tanaka-san's はい as approval of calendar-month grouping. He meant 'I hear you, I will check with accounting'.",
+      "chain": [
+        {
+          "id": "fact_py_meeting_proposal",
+          "text": "At the design review, the team proposed grouping the export by calendar month to keep it simple.",
+          "holders": ["artifact:meeting_notes", "npc:linh"]
+        },
+        {
+          "id": "fact_py_hai_recorded",
+          "text": "The meeting notes record Tanaka-san's reply as 'はい (approved)'.",
+          "holders": ["artifact:meeting_notes", "npc:hana"]
+        },
+        {
+          "id": "fact_py_check_internally",
+          "text": "Tanaka-san meant 'I understand, I will check with accounting'; his follow-up message in the shared chat was never answered.",
+          "holders": ["npc:tanaka", "artifact:chat_log"]
+        }
+      ],
+      "fix_space": {
+        "fixes": [
+          "Change the export to the closing period the client's accounting team needs and re-deliver.",
+          "Walk the client through the corrected export before the next acceptance run."
+        ],
+        "prevention": [
+          "After each meeting, confirm decisions in writing with a clear yes/no question.",
+          "The BrSE explains indirect replies like はい in the meeting notes instead of recording them as approval."
+        ]
+      }
+    }
+  ],
+  "red_herrings": [
+    {
+      "id": "rh_junior_null_fix",
+      "text": "Minh fixed a crash in the export screen two days before the release.",
+      "holders": ["npc:minh", "artifact:git_log"]
+    },
+    {
+      "id": "rh_late_regression_run",
+      "text": "The final regression run finished six hours late because the test server was down.",
+      "holders": ["npc:trang", "artifact:chat_log"]
+    },
+    {
+      "id": "rh_timezone_config",
+      "text": "A timezone setting on the export server was changed on release day.",
+      "holders": ["artifact:git_log", "npc:linh"]
+    },
+    {
+      "id": "rh_csv_encoding",
+      "text": "On the client's PCs, the CSV headers show broken Japanese characters.",
+      "holders": ["npc:trang", "npc:tanaka"]
+    }
+  ]
+}

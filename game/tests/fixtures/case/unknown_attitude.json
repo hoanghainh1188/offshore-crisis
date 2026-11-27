@@ -1,0 +1,64 @@
+{
+  "id": "fixture_case",
+  "title": "Fixture Case",
+  "npcs": [
+    {
+      "id": "ana",
+      "name": "Ana",
+      "role": "Dev",
+      "attitudes": [
+        "honest",
+        "defensive"
+      ]
+    },
+    {
+      "id": "bo",
+      "name": "Bo",
+      "role": "Tester",
+      "attitudes": [
+        "grumpy"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "variant_a",
+      "description": "Something went wrong.",
+      "chain": [
+        {
+          "id": "fact_one",
+          "text": "First fact.",
+          "holders": [
+            "npc:ana",
+            "artifact:ticket"
+          ]
+        },
+        {
+          "id": "fact_two",
+          "text": "Second fact.",
+          "holders": [
+            "artifact:chat_log",
+            "npc:bo"
+          ]
+        }
+      ],
+      "fix_space": {
+        "fixes": [
+          "Fix it."
+        ],
+        "prevention": [
+          "Prevent it."
+        ]
+      }
+    }
+  ],
+  "red_herrings": [
+    {
+      "id": "rh_one",
+      "text": "A wrong lead.",
+      "holders": [
+        "npc:bo"
+      ]
+    }
+  ]
+}

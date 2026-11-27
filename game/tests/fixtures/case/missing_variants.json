@@ -1,0 +1,32 @@
+{
+  "id": "fixture_case",
+  "title": "Fixture Case",
+  "npcs": [
+    {
+      "id": "ana",
+      "name": "Ana",
+      "role": "Dev",
+      "attitudes": [
+        "honest",
+        "defensive"
+      ]
+    },
+    {
+      "id": "bo",
+      "name": "Bo",
+      "role": "Tester",
+      "attitudes": [
+        "vague"
+      ]
+    }
+  ],
+  "red_herrings": [
+    {
+      "id": "rh_one",
+      "text": "A wrong lead.",
+      "holders": [
+        "npc:bo"
+      ]
+    }
+  ]
+}
