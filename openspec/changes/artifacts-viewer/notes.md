@@ -28,7 +28,7 @@ clock stays visible above the viewer.
 ### Implementation notes
 
 - "Clock keeps running" is tested with a 1 s wait instead of 5 s to keep the suite fast; it
-  checks the clock lost the measured wall time (±0.1 s).
+  checks the clock lost the measured wall time (±0.25 s).
 - Font: the official source is the variable `NotoSansJP[wght].ttf` (9.6 MB), pinned to
   weight 400 and subset to 303 KB. Output is `.ttf`, not `.otf` (design updated). Rebuild
   script: `tools/subset_jp_font.py`, commands in `game/fonts/README.md`.
