@@ -1,0 +1,185 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://office/office_room.gd" id="1_room"]
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://interaction/interactable.tscn" id="3_interactable"]
+
+[sub_resource type="RectangleShape2D" id="Shape_WallTop"]
+size = Vector2(640, 16)
+
+[sub_resource type="RectangleShape2D" id="Shape_WallBottom"]
+size = Vector2(640, 16)
+
+[sub_resource type="RectangleShape2D" id="Shape_WallLeft"]
+size = Vector2(16, 360)
+
+[sub_resource type="RectangleShape2D" id="Shape_WallRight"]
+size = Vector2(16, 360)
+
+[sub_resource type="RectangleShape2D" id="Shape_DevDesks"]
+size = Vector2(140, 24)
+
+[sub_resource type="RectangleShape2D" id="Shape_QaDesk"]
+size = Vector2(100, 24)
+
+[sub_resource type="RectangleShape2D" id="Shape_CenterTable"]
+size = Vector2(96, 32)
+
+[sub_resource type="RectangleShape2D" id="Shape_CoffeeCounter"]
+size = Vector2(88, 24)
+
+[node name="OfficeRoom" type="Node2D"]
+script = ExtResource("1_room")
+
+[node name="Floor" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+color = Color(0.86, 0.83, 0.76, 1)
+
+[node name="Solids" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="WallTop" type="CollisionShape2D" parent="Solids"]
+position = Vector2(320, 8)
+shape = SubResource("Shape_WallTop")
+
+[node name="Visual" type="Polygon2D" parent="Solids/WallTop"]
+color = Color(0.32, 0.34, 0.4, 1)
+polygon = PackedVector2Array(-320, -8, 320, -8, 320, 8, -320, 8)
+
+[node name="WallBottom" type="CollisionShape2D" parent="Solids"]
+position = Vector2(320, 352)
+shape = SubResource("Shape_WallBottom")
+
+[node name="Visual" type="Polygon2D" parent="Solids/WallBottom"]
+color = Color(0.32, 0.34, 0.4, 1)
+polygon = PackedVector2Array(-320, -8, 320, -8, 320, 8, -320, 8)
+
+[node name="WallLeft" type="CollisionShape2D" parent="Solids"]
+position = Vector2(8, 180)
+shape = SubResource("Shape_WallLeft")
+
+[node name="Visual" type="Polygon2D" parent="Solids/WallLeft"]
+color = Color(0.32, 0.34, 0.4, 1)
+polygon = PackedVector2Array(-8, -180, 8, -180, 8, 180, -8, 180)
+
+[node name="WallRight" type="CollisionShape2D" parent="Solids"]
+position = Vector2(632, 180)
+shape = SubResource("Shape_WallRight")
+
+[node name="Visual" type="Polygon2D" parent="Solids/WallRight"]
+color = Color(0.32, 0.34, 0.4, 1)
+polygon = PackedVector2Array(-8, -180, 8, -180, 8, 180, -8, 180)
+
+[node name="DevDesks" type="CollisionShape2D" parent="Solids"]
+position = Vector2(150, 92)
+shape = SubResource("Shape_DevDesks")
+
+[node name="Visual" type="Polygon2D" parent="Solids/DevDesks"]
+color = Color(0.55, 0.42, 0.3, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
+
+[node name="QaDesk" type="CollisionShape2D" parent="Solids"]
+position = Vector2(500, 92)
+shape = SubResource("Shape_QaDesk")
+
+[node name="Visual" type="Polygon2D" parent="Solids/QaDesk"]
+color = Color(0.55, 0.42, 0.3, 1)
+polygon = PackedVector2Array(-50, -12, 50, -12, 50, 12, -50, 12)
+
+[node name="CenterTable" type="CollisionShape2D" parent="Solids"]
+position = Vector2(320, 180)
+shape = SubResource("Shape_CenterTable")
+
+[node name="Visual" type="Polygon2D" parent="Solids/CenterTable"]
+color = Color(0.55, 0.42, 0.3, 1)
+polygon = PackedVector2Array(-48, -16, 48, -16, 48, 16, -48, 16)
+
+[node name="CoffeeCounter" type="CollisionShape2D" parent="Solids"]
+position = Vector2(80, 316)
+shape = SubResource("Shape_CoffeeCounter")
+
+[node name="Visual" type="Polygon2D" parent="Solids/CoffeeCounter"]
+color = Color(0.45, 0.33, 0.25, 1)
+polygon = PackedVector2Array(-44, -12, 44, -12, 44, 12, -44, 12)
+
+[node name="EntranceDoor" type="ColorRect" parent="."]
+offset_left = 296.0
+offset_top = 344.0
+offset_right = 344.0
+offset_bottom = 348.0
+mouse_filter = 2
+color = Color(0.7, 0.6, 0.35, 1)
+
+[node name="ZoneLabels" type="Node2D" parent="."]
+
+[node name="Label0" type="Label" parent="ZoneLabels"]
+offset_left = 110.0
+offset_top = 60.0
+theme_override_colors/font_color = Color(0.3, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 8
+text = "Dev desks"
+
+[node name="Label1" type="Label" parent="ZoneLabels"]
+offset_left = 470.0
+offset_top = 60.0
+theme_override_colors/font_color = Color(0.3, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 8
+text = "QA corner"
+
+[node name="Label2" type="Label" parent="ZoneLabels"]
+offset_left = 60.0
+offset_top = 290.0
+theme_override_colors/font_color = Color(0.3, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 8
+text = "Coffee"
+
+[node name="Label3" type="Label" parent="ZoneLabels"]
+offset_left = 296.0
+offset_top = 326.0
+theme_override_colors/font_color = Color(0.3, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 8
+text = "Entrance"
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Linh" parent="Interactables" instance=ExtResource("3_interactable")]
+position = Vector2(232, 92)
+kind = 0
+id = &"linh"
+display_name = "Linh"
+body_size = Vector2(12, 16)
+color = Color(0.85, 0.45, 0.3, 1)
+
+[node name="DocumentShelf" parent="Interactables" instance=ExtResource("3_interactable")]
+position = Vector2(270, 92)
+kind = 1
+id = &"document_shelf"
+display_name = "Document Shelf"
+body_size = Vector2(16, 40)
+color = Color(0.5, 0.45, 0.4, 1)
+
+[node name="Trang" parent="Interactables" instance=ExtResource("3_interactable")]
+position = Vector2(500, 118)
+kind = 0
+id = &"trang"
+display_name = "Trang"
+body_size = Vector2(12, 16)
+color = Color(0.75, 0.35, 0.6, 1)
+label_offset = Vector2(0, 28)
+
+[node name="MeetingScreen" parent="Interactables" instance=ExtResource("3_interactable")]
+position = Vector2(617, 200)
+kind = 1
+id = &"meeting_screen"
+display_name = "Meeting Room Screen"
+body_size = Vector2(6, 64)
+color = Color(0.2, 0.25, 0.3, 1)
+label_offset = Vector2(-44, 0)
+
+[node name="EntranceSpawn" type="Marker2D" parent="."]
+position = Vector2(320, 316)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(320, 316)
