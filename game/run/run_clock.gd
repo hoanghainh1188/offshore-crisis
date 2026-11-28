@@ -39,6 +39,17 @@ func tick(delta: float) -> void:
 		_expire()
 
 
+## Moves office time forward (specs/run-clock), e.g. when a question costs 15 minutes.
+## Applies even while paused: a pause waits on AI latency, it does not freeze game actions.
+func advance_minutes(minutes: int) -> void:
+	if not _started or _expired or minutes <= 0:
+		return
+	var seconds_per_minute: float = total_seconds / float(END_MINUTES - START_MINUTES)
+	remaining_seconds = maxf(remaining_seconds - minutes * seconds_per_minute, 0.0)
+	if remaining_seconds == 0.0:
+		_expire()
+
+
 func pause(reason: StringName) -> void:
 	if _expired:
 		return

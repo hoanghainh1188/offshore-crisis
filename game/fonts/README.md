@@ -9,8 +9,8 @@ terms (はい, 月次締め, ...) render on the web build, which has no system f
   `https://github.com/google/fonts/tree/main/ofl/notosansjp` (`NotoSansJP[wght].ttf`).
 - License: SIL Open Font License 1.1, see `OFL.txt` next to this file.
 - Contains: Latin, Latin-1, general and CJK punctuation, hiragana, katakana, full-width
-  forms, and every CJK character found in `game/case/templates/*.json` and
-  `game/artifacts/*.json`.
+  forms, and every CJK character found in `game/case/templates/*.json`,
+  `game/artifacts/*.json` and `game/dialogue/*.json`.
 
 ### Rebuild after adding Japanese text
 

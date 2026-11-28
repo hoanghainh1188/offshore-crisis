@@ -12,6 +12,9 @@ var clock: RunClock = RunClock.new()
 var truth_sheet: TruthSheet = null
 ## Revealed fact ids in the order they were first found.
 var revealed_fact_ids: Array[StringName] = []
+## Question ids asked this run; asking one again is free (specs/npc-dialogue).
+var asked_question_ids: Array[StringName] = []
+var dialogue_tuning: DialogueTuning = preload("res://dialogue/dialogue_tuning.tres")
 
 var _template: CaseTemplate = null
 
@@ -25,14 +28,14 @@ func reset_run() -> void:
 	clock = RunClock.new()
 	truth_sheet = null
 	revealed_fact_ids = []
+	asked_question_ids = []
 
 
 ## Generates this run's Truth Sheet and logs only the seed.
 func start_case(seed_value: int) -> void:
-	if _template == null:
-		_template = CaseTemplateLoader.new().load_template(CASE_TEMPLATE_PATH)
-	truth_sheet = CaseGenerator.new().generate(_template, seed_value)
+	truth_sheet = CaseGenerator.new().generate(case_template(), seed_value)
 	revealed_fact_ids = []
+	asked_question_ids = []
 	print(CaseLog.format(seed_value))
 
 
@@ -46,3 +49,28 @@ func reveal_fact(fact_id: StringName) -> bool:
 	revealed_fact_ids.append(fact_id)
 	fact_revealed.emit(fact_id)
 	return true
+
+
+## The "Wrong Delivery" template, loaded once (NPC names, roles and fact ids).
+func case_template() -> CaseTemplate:
+	if _template == null:
+		_template = CaseTemplateLoader.new().load_template(CASE_TEMPLATE_PATH)
+	return _template
+
+
+func is_asked(question_id: StringName) -> bool:
+	return asked_question_ids.has(question_id)
+
+
+## Asks an NPC a question. The first time in a run it reveals the answer's fact (if any)
+## and then costs in-game time; reveal comes first so a question that ends the day still
+## counts what was learned. Asking again returns the same answer for free.
+func ask_question(npc_id: StringName, question: DialogueData.Question) -> DialogueAnswer:
+	var answer: DialogueAnswer = DialogueRules.answer(question, npc_id, truth_sheet)
+	if is_asked(question.id):
+		return answer
+	asked_question_ids.append(question.id)
+	if answer.reveals != &"":
+		reveal_fact(answer.reveals)
+	clock.advance_minutes(dialogue_tuning.question_cost_minutes)
+	return answer

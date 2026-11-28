@@ -6,6 +6,7 @@ const FONT_PATH: String = "res://fonts/noto_sans_jp_subset.ttf"
 const DATA_FILES: Array[String] = [
 	"res://case/templates/wrong_delivery.json",
 	"res://artifacts/artifact_filler.json",
+	"res://dialogue/dialogue_offline.json",
 ]
 
 var _font: FontFile

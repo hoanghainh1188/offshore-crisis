@@ -1,12 +1,14 @@
 class_name OfficeRoom
 extends Node2D
 ## The single office room (GDD section 12). Places the player at the entrance on load and
-## opens the artifact viewer from the Document Shelf (specs/artifact-viewer).
+## opens panels from targets: the Document Shelf opens the artifact viewer
+## (specs/artifact-viewer), NPCs with dialogue open the dialogue panel (specs/npc-dialogue).
 
 @onready var _spawn: Marker2D = $EntranceSpawn
 @onready var _player: Player = $Player
 @onready var _shelf: Interactable = $Interactables/DocumentShelf
 @onready var _viewer: ArtifactViewer = $ArtifactViewer
+@onready var _dialogue: DialoguePanel = $DialoguePanel
 
 
 func _ready() -> void:
@@ -14,15 +16,29 @@ func _ready() -> void:
 	# editor is enough to change where the run begins.
 	_player.position = _spawn.position
 	_shelf.interacted.connect(_open_viewer)
-	_viewer.closed.connect(_on_viewer_closed)
+	_viewer.closed.connect(_unfreeze_player)
+	_dialogue.closed.connect(_unfreeze_player)
+	for node: Node in $Interactables.get_children():
+		var target: Interactable = node as Interactable
+		if target != null and target.kind == Interactable.Kind.NPC and _dialogue.has_dialogue(target.id):
+			target.interacted.connect(_open_dialogue.bind(target.id))
 
 
 func _open_viewer() -> void:
 	_viewer.open()
-	# Freeze only the player, not the tree: pausing the tree would also stop the run clock,
-	# which must keep running while reading.
+	_freeze_player()
+
+
+func _open_dialogue(npc_id: StringName) -> void:
+	_dialogue.open(npc_id)
+	_freeze_player()
+
+
+## One path for every panel. Freeze only the player, not the tree: pausing the tree would
+## also stop the run clock, which keeps running while reading or talking.
+func _freeze_player() -> void:
 	_player.process_mode = Node.PROCESS_MODE_DISABLED
 
 
-func _on_viewer_closed() -> void:
+func _unfreeze_player() -> void:
 	_player.process_mode = Node.PROCESS_MODE_INHERIT

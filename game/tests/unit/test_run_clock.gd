@@ -184,3 +184,45 @@ func test_office_time_with_tuned_countdown() -> void:
 func test_format_pads_hours_and_minutes() -> void:
 	assert_eq(RunClock.format_office_time(9 * 60 + 5), "09:05")
 	assert_eq(RunClock.format_office_time(17 * 60), "17:00")
+
+
+# --- advance by in-game minutes ---
+
+func test_advance_fifteen_minutes_on_default_run() -> void:
+	_clock.start(TOTAL)
+	_clock.advance_minutes(15)
+	assert_eq(RunClock.format_office_time(_clock.office_minutes()), "09:15")
+	assert_almost_eq(TOTAL - _clock.remaining_seconds, 28.125, 0.0001)
+
+
+func test_advance_while_paused_keeps_the_pause() -> void:
+	_clock.start(TOTAL)
+	_clock.pause(&"ai_reply")
+	_clock.advance_minutes(15)
+	assert_eq(RunClock.format_office_time(_clock.office_minutes()), "09:15")
+	assert_false(_clock.is_running())
+
+
+func test_advance_past_five_pm_ends_the_day_once() -> void:
+	_clock.start(TOTAL)
+	_clock.advance_minutes(470)  # 16:50
+	assert_eq(RunClock.format_office_time(_clock.office_minutes()), "16:50")
+	_clock.advance_minutes(15)
+	assert_eq(RunClock.format_office_time(_clock.office_minutes()), "17:00")
+	assert_eq(_clock.remaining_seconds, 0.0)
+	_clock.advance_minutes(15)
+	assert_signal_emit_count(_clock, "time_up", 1)
+
+
+func test_advance_before_start_does_nothing() -> void:
+	_clock.advance_minutes(15)
+	assert_false(_clock.is_started())
+	assert_eq(_clock.office_minutes(), RunClock.START_MINUTES)
+
+
+func test_advance_after_time_up_does_nothing() -> void:
+	_clock.start(TOTAL)
+	_clock.tick(TOTAL)
+	_clock.advance_minutes(15)
+	assert_signal_emit_count(_clock, "time_up", 1)
+	assert_eq(_clock.remaining_seconds, 0.0)
