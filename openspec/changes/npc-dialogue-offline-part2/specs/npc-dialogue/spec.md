@@ -34,6 +34,46 @@ log line for the interacted target SHALL still be written.
 - **WHEN** the player interacts with the Document Shelf
 - **THEN** the dialogue panel does not open
 
+### Requirement: Asking costs in-game time once
+Asking a question for the first time in a run SHALL advance the office time by the
+question cost from a data file (default 15 in-game minutes for NPCs in the room, and a
+higher remote cost — default 30 in-game minutes — for calling Tanaka-san via the Meeting
+Room Screen). Opening the dialogue panel SHALL NOT cost time. Asking the same question
+again SHALL show the same answer, cost nothing and reveal nothing. Asked questions SHALL
+be marked in the list. While the panel is open the clock SHALL keep running in real time
+as well.
+
+#### Scenario: First ask
+- **WHEN** the office time is 10:00 and the player asks an in-room NPC a new question
+- **THEN** the office time is at least 10:15
+
+#### Scenario: Remote first ask
+- **WHEN** the office time is 10:00 and the player asks Tanaka-san a new question via the
+  Meeting Room Screen
+- **THEN** the office time is at least 10:30
+
+#### Scenario: Ask again
+- **WHEN** the player asks a question they already asked in this run
+- **THEN** the office time does not jump, the answer is the same and no reveal is
+  announced
+
+#### Scenario: Remote ask again
+- **WHEN** the player asks Tanaka-san a question they already asked in this run
+- **THEN** the office time does not jump, the answer is the same and no reveal is
+  announced
+
+#### Scenario: Marked as asked
+- **WHEN** a question has been asked
+- **THEN** it is shown as asked in the list, also after closing and reopening the panel
+
+#### Scenario: Question that ends the day
+- **WHEN** the office time is 16:50 and the player asks an in-room NPC a new question
+- **THEN** the run moves to the meeting screen
+
+#### Scenario: Remote question that ends the day
+- **WHEN** the office time is 16:35 and the player asks Tanaka-san a new question
+- **THEN** the run moves to the meeting screen
+
 ## ADDED Requirements
 
 ### Requirement: Content for Minh, Hana, and Tanaka-san
@@ -59,8 +99,8 @@ work offline with no network calls.
 - **WHEN** `fact_py_hai_recorded` is revealed, the player talks to Tanaka-san via the
   Meeting Room Screen, the Truth Sheet gives `fact_py_check_internally` to `npc:tanaka`,
   and the player asks the unlocked follow-up about his reply at the design review
-- **THEN** the panel shows Tanaka-san's `indirect` "holds" answer, costs the question time
-  once, and reveals `fact_py_check_internally`
+- **THEN** the panel shows Tanaka-san's `indirect` "holds" answer, costs the remote
+  question time once, and reveals `fact_py_check_internally`
 
 #### Scenario: Minh's un-ticketed export follow-up
 - **WHEN** `fact_coc_chat_agreement` is revealed, the Truth Sheet gives
@@ -68,3 +108,23 @@ work offline with no network calls.
   chat-agreed change
 - **THEN** the panel shows Minh's `nervous` "holds" answer and reveals
   `fact_coc_no_ticket`
+
+### Requirement: Chain facts are reachable without lock cycles
+For every generated case across seeds 1 to 300, every chain fact in that run's Truth Sheet
+SHALL be reachable starting from always-unlocked questions and documents, without deadlocked
+unlock cycles between NPCs.
+
+#### Scenario: Every chain fact is reachable across 300 seeds
+- **WHEN** reachability is simulated from always-unlocked questions and all artifacts until
+  a fixed point for seeds 1 through 300
+- **THEN** every fact in the run's `chain` is reached in every seed
+
+### Requirement: Honest and indirect non-held answers do not mislead
+When an NPC does not hold a question's fact, an `honest` answer (for Linh, Trang, or Hana)
+and an `indirect` answer (for Tanaka-san) SHALL NOT claim or imply that the NPC holds or
+knows that fact.
+
+#### Scenario: Non-held answers avoid false claims
+- **WHEN** Hana has attitude `honest` or Tanaka-san has attitude `indirect` and the NPC
+  does not hold a question's fact
+- **THEN** the `not_held` answer does not state the fact as something the NPC did or knows
