@@ -87,5 +87,6 @@ func test_every_target_is_reachable_and_interactable() -> void:
 		await _stand_at(approach[node_name])
 		var hit: Interactable = _player.try_interact()
 		assert_eq(hit, _target(node_name), "interact with %s" % node_name)
-		# The shelf opens the artifact viewer, which freezes the player until it closes.
+		# The shelf and NPCs open panels that freeze the player until they close.
 		(_room.get_node("ArtifactViewer") as ArtifactViewer).close()
+		(_room.get_node("DialoguePanel") as DialoguePanel).close()

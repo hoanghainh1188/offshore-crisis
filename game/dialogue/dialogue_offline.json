@@ -1,0 +1,165 @@
+{
+  "npcs": {
+    "linh": {
+      "questions": [
+        {
+          "id": "linh_release_work",
+          "text": "What were you working on for release 2.3?",
+          "not_held": {
+            "defensive": "The export, the invoice search, a pile of fixes. We delivered everything on the list.",
+            "honest": "Mostly the monthly export and the invoice search. It was a tight release."
+          }
+        },
+        {
+          "id": "linh_ticket_wording",
+          "text": "What did the ticket say about how the export groups rows?",
+          "fact": "fact_lit_ticket_calendar",
+          "holds": {
+            "defensive": "We built exactly what the ticket said: 'grouped by calendar month'. Read OC-142 yourself.",
+            "honest": "Ticket OC-142 says rows grouped by calendar month. That's what we built."
+          },
+          "not_held": {
+            "defensive": "I don't remember the exact wording. The tickets are on the shelf.",
+            "honest": "I'd have to check the ticket. I don't remember the wording by heart."
+          }
+        },
+        {
+          "id": "linh_client_changes",
+          "text": "Did the client ask for any changes during development?",
+          "fact": "fact_coc_chat_agreement",
+          "holds": {
+            "defensive": "...Fine. They asked in the shared chat to switch to their closing period. I wrote 'OK, will do'. I meant to update the spec.",
+            "honest": "Yes. In the shared chat they asked to switch the export to their closing period, and I replied 'OK, will do'. I never followed up."
+          },
+          "not_held": {
+            "defensive": "Clients ask for things all the time. If it mattered, it's written down somewhere.",
+            "honest": "I'd have to look back through my messages. A lot was going on that month."
+          }
+        },
+        {
+          "id": "linh_who_decided",
+          "text": "Who decided to group the export by calendar month?",
+          "fact": "fact_py_meeting_proposal",
+          "holds": {
+            "defensive": "We proposed it at the design review and nobody objected. That's how decisions work.",
+            "honest": "We proposed calendar month at the design review to keep it simple. I thought the client agreed."
+          },
+          "not_held": {
+            "defensive": "Decisions like that are made in meetings, not by me alone.",
+            "honest": "I'm not sure who settled it. It should be in the meeting notes or the spec."
+          }
+        },
+        {
+          "id": "linh_release_day",
+          "text": "Did anything unusual happen on release day?",
+          "fact": "rh_timezone_config",
+          "holds": {
+            "defensive": "Someone changed a timezone setting on the export server that day. Not my change, and it has nothing to do with this.",
+            "honest": "A timezone setting on the export server was changed on release day. I doubt it matters, but it's in the git log."
+          },
+          "not_held": {
+            "defensive": "Release days are always messy. Check the logs if you want details.",
+            "honest": "I didn't notice anything myself, but I wasn't watching the servers. The git log would show changes."
+          }
+        },
+        {
+          "id": "linh_hai_followup",
+          "text": "The meeting notes say Tanaka-san answered 'はい (approved)'. Did he really approve?",
+          "fact": "fact_py_meeting_proposal",
+          "unlock_any": [
+            "fact_py_hai_recorded"
+          ],
+          "holds": {
+            "defensive": "He said はい when we proposed calendar month. In my book that's a yes.",
+            "honest": "He said はい when we proposed calendar month, and I took it as approval. Maybe it wasn't."
+          },
+          "not_held": {
+            "defensive": "I'm not the one who took those notes. Ask whoever wrote them.",
+            "honest": "I'm not sure what he meant. Maybe ask whoever took the notes."
+          }
+        },
+        {
+          "id": "linh_spec_followup",
+          "text": "The spec still says calendar month. Did anyone ask you to change it?",
+          "fact": "fact_coc_chat_agreement",
+          "unlock_any": [
+            "fact_coc_spec_unchanged"
+          ],
+          "holds": {
+            "defensive": "The client asked in chat and I said 'OK, will do'. Updating the spec wasn't my job.",
+            "honest": "The client asked in chat and I said 'OK, will do'. I should have updated the spec right then."
+          },
+          "not_held": {
+            "defensive": "Updating the spec isn't my job. Talk to whoever owns it.",
+            "honest": "I'd need to check my messages before I answer that."
+          }
+        }
+      ]
+    },
+    "trang": {
+      "questions": [
+        {
+          "id": "trang_testing_overall",
+          "text": "How did testing go for release 2.3?",
+          "not_held": {
+            "honest": "We ran the full regression. Two small UI issues, nothing serious."
+          }
+        },
+        {
+          "id": "trang_export_checks",
+          "text": "What did you check for the monthly export?",
+          "not_held": {
+            "honest": "One row per invoice, the right columns, totals that match. All green on staging."
+          }
+        },
+        {
+          "id": "trang_spec_version",
+          "text": "Which version of the spec did you test against?",
+          "fact": "fact_coc_spec_unchanged",
+          "holds": {
+            "honest": "The latest revision in the spec document. It still says 'calendar month', and that revision is older than the client's chat request."
+          },
+          "not_held": {
+            "honest": "The one linked from the ticket. I test what is written down."
+          }
+        },
+        {
+          "id": "trang_final_run",
+          "text": "Did the final test run finish on time?",
+          "fact": "rh_late_regression_run",
+          "holds": {
+            "honest": "No, six hours late. The test server was down most of the morning."
+          },
+          "not_held": {
+            "honest": "I'd have to check the timings. The team chat has the details."
+          }
+        },
+        {
+          "id": "trang_csv_problems",
+          "text": "Did you see any problems with the CSV files?",
+          "fact": "rh_csv_encoding",
+          "holds": {
+            "honest": "On the client's PCs the CSV headers show broken Japanese characters. I logged it, but that's an encoding issue."
+          },
+          "not_held": {
+            "honest": "Not in our environment. The files opened fine for me."
+          }
+        },
+        {
+          "id": "trang_chat_followup",
+          "text": "Linh agreed to a change in chat. Was the spec updated after that?",
+          "fact": "fact_coc_spec_unchanged",
+          "unlock_any": [
+            "fact_coc_chat_agreement"
+          ],
+          "holds": {
+            "honest": "No. The last spec revision is from before that chat, so I tested the old requirement."
+          },
+          "not_held": {
+            "honest": "I can't tell you about chat. I only test against what's in the ticket and the spec."
+          }
+        }
+      ]
+    }
+  }
+}

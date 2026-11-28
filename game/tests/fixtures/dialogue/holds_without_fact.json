@@ -1,0 +1,64 @@
+{
+  "npcs": {
+    "ana": {
+      "questions": [
+        {
+          "id": "ana_fact_one",
+          "text": "About fact one?",
+          "fact": "fact_one",
+          "holds": {
+            "honest": "Fact one is true. (honest)",
+            "defensive": "Fact one is true. (defensive)"
+          },
+          "not_held": {
+            "honest": "No idea. (honest)",
+            "defensive": "No idea. (defensive)"
+          }
+        },
+        {
+          "id": "ana_small",
+          "text": "How are you?",
+          "not_held": {
+            "honest": "Busy. (honest)",
+            "defensive": "Busy. (defensive)"
+          },
+          "holds": {
+            "honest": "x (honest)",
+            "defensive": "x (defensive)"
+          }
+        },
+        {
+          "id": "ana_follow",
+          "text": "Follow-up on fact one?",
+          "fact": "fact_two",
+          "unlock_any": [
+            "fact_one"
+          ],
+          "holds": {
+            "honest": "Fact two too. (honest)",
+            "defensive": "Fact two too. (defensive)"
+          },
+          "not_held": {
+            "honest": "Ask Bo. (honest)",
+            "defensive": "Ask Bo. (defensive)"
+          }
+        }
+      ]
+    },
+    "bo": {
+      "questions": [
+        {
+          "id": "bo_two",
+          "text": "About fact two?",
+          "fact": "fact_two",
+          "holds": {
+            "vague": "Maybe fact two."
+          },
+          "not_held": {
+            "vague": "Hmm."
+          }
+        }
+      ]
+    }
+  }
+}

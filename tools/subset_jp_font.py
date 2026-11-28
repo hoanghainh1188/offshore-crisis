@@ -21,7 +21,7 @@ from fontTools.ttLib import TTFont
 from fontTools.varLib import instancer
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-DATA_GLOBS = ["game/case/templates/*.json", "game/artifacts/*.json"]
+DATA_GLOBS = ["game/case/templates/*.json", "game/artifacts/*.json", "game/dialogue/*.json"]
 OUTPUT = ROOT / "game/fonts/noto_sans_jp_subset.ttf"
 
 # Latin, Latin-1, general punctuation, CJK punctuation, kana, full-width forms.
