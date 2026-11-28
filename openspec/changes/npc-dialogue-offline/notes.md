@@ -20,6 +20,10 @@ clock shows 09:30 (2 × 15 minutes) above the panel.
 
 Export exits 0; the game loads and Start works with no console errors.
 
+### Web walk-through (task 5.3)
+
+Harry walked through the scenarios on a visible web build on 2026-11-28: pass.
+
 ### Content check (task 2.4)
 
 Harry read `game/dialogue/dialogue_offline.json` on 2026-11-28 and approved it: no
@@ -37,10 +41,6 @@ Harry read `game/dialogue/dialogue_offline.json` on 2026-11-28 and approved it: 
 - Found by a test: after an answer reveals a fact the list rebuilds; focus now returns to
   the question just asked.
 - No font rebuild needed: the dialogue only adds はい, already in the subset.
-
-### Pending
-
-- Task 5.3: scenario walk-through on a visible web build.
 
 ## Devlog
 

@@ -28,7 +28,7 @@
 
 - [x] 5.1 Run the full GUT suite headless; verify 0 failures and no new warnings
 - [x] 5.2 Export with `mkdir -p build/web && godot --headless --path game --export-release "Web" ../build/web/index.html`; verify exit 0 and no console errors when the game loads
-- [ ] 5.3 Walk through every scenario in `specs/npc-dialogue` and the `run-clock` addition on a visible web build (talk to Linh and Trang, watch the clock jump 15 minutes, ask again, unlock a follow-up by reading a document); verify all pass and record pass or fail in the change notes
+- [x] 5.3 Walk through every scenario in `specs/npc-dialogue` and the `run-clock` addition on a visible web build (talk to Linh and Trang, watch the clock jump 15 minutes, ask again, unlock a follow-up by reading a document); verify all pass and record pass or fail in the change notes
 
 ## Workflow follow-up
 
