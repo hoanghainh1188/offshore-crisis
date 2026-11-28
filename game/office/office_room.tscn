@@ -181,6 +181,15 @@ body_size = Vector2(6, 64)
 color = Color(0.2, 0.25, 0.3, 1)
 label_offset = Vector2(-44, 0)
 
+[node name="PcTerminal" parent="Interactables" instance=ExtResource("3_interactable")]
+position = Vector2(60, 92)
+kind = 1
+id = &"pc_terminal"
+display_name = "PC Terminal"
+body_size = Vector2(16, 16)
+color = Color(0.25, 0.4, 0.5, 1)
+label_offset = Vector2(-6, 0)
+
 [node name="EntranceSpawn" type="Marker2D" parent="."]
 position = Vector2(320, 316)
 

@@ -1,6 +1,6 @@
 class_name ArtifactViewer
 extends CanvasLayer
-## Reading screen for the Document Shelf (specs/artifact-viewer). Sits on layer 5, under
+## Reading screen for the Document Shelf and PC Terminal (specs/artifact-viewer). Sits on layer 5, under
 ## the office clock (layer 10), so the time stays visible: the clock keeps running here.
 
 ## Emitted when the viewer closes (Close button or Esc).
@@ -45,10 +45,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
-func open() -> void:
+## `source_name` is the object the player used (Document Shelf or PC Terminal); both
+## show the same documents (specs/artifact-viewer).
+func open(source_name: String = "Document Shelf") -> void:
 	visible = true
 	_shown = null
-	_title_label.text = "Document Shelf"
+	_title_label.text = source_name
 	_body_label.text = "Pick a document on the left." if _filler != null \
 		else "Documents could not be loaded."
 	_buttons[ArtifactDocument.TYPES[0]].grab_focus()
@@ -78,6 +80,14 @@ func document_button(type: StringName) -> Button:
 
 func close_button() -> Button:
 	return _close_button
+
+
+func heading_text() -> String:
+	return _title_label.text
+
+
+func body_text() -> String:
+	return _body_label.text
 
 
 func shown_title() -> String:

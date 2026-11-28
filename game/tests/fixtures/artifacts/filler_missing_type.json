@@ -10,6 +10,12 @@
       "Minh commented that the column order matches the sample file from the client."
     ]
   },
+  "git_log": {
+    "title": "Git log: kazegumo-export",
+    "lines": [
+      "a1b2c3d  2026-10-01  Minh  Add export screen skeleton"
+    ]
+  },
   "chat_log": {
     "title": "Team chat: #kazegumo-project",
     "lines": [
@@ -19,6 +25,18 @@
       "Hana passed on that the client wants to move Thursday's call to 16:00.",
       "Linh reminded everyone to finish the release notes by Friday.",
       "Trang reported regression done, with two minor UI issues logged."
+    ]
+  },
+  "spec_doc": {
+    "title": "Spec fixture",
+    "sections": [
+      {
+        "id": "revisions",
+        "heading": "Revision history",
+        "lines": [
+          "v1.0 first draft"
+        ]
+      }
     ]
   }
 }
