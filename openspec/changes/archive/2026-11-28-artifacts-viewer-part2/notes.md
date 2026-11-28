@@ -29,6 +29,8 @@
   Esc closed the viewer and the dialogue. Console: the three `[interact]` lines, no errors.
   The in-app Browser pane throttles timers to ~1 fps, so it cannot run the game loop.
 
+- Antigravity QA (2026-11-28): tested the web build against the acceptance criteria in
+  `specs/`; no issues found.
 - PR #23 review fixes:
   - Linh's honest "does not hold" answer to the no-ticket follow-up no longer points at the
     chat log, since Tanaka-san can hold `fact_coc_chat_agreement`.
