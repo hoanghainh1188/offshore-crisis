@@ -174,3 +174,21 @@ func test_honest_and_indirect_non_held_answers_do_not_mislead() -> void:
 			var non_held_line: String = question.not_held.get(attitude, "")
 			assert_ne(non_held_line, "", "%s %s non_held" % [question.id, attitude])
 			assert_ne(non_held_line, held_line, "%s %s differs from holds" % [question.id, attitude])
+	var tanaka_hai: DialogueData.Question = _find(&"tanaka", &"tanaka_hai_followup")
+	var tanaka_non_held: String = tanaka_hai.not_held[&"indirect"].to_lower()
+	for leak: String in ["listening", "understand", "check with accounting"]:
+		assert_false(tanaka_non_held.contains(leak),
+			"tanaka_hai_followup not_held must not leak '%s'" % leak)
+
+
+func test_hana_protective_holds_unconfirmed_note() -> void:
+	for seed_value: int in range(1, SEEDS + 1):
+		var sheet: TruthSheet = CaseGenerator.new().generate(_template, seed_value)
+		if sheet.knowledge.get(&"fact_lit_unconfirmed_note", "") == "npc:hana" \
+				and sheet.attitudes.get(&"hana", &"") == &"protective":
+			var question: DialogueData.Question = _find(&"hana", &"hana_translation_note")
+			var answer: DialogueAnswer = DialogueRules.answer(question, &"hana", sheet)
+			assert_eq(answer.text, question.holds[&"protective"])
+			assert_eq(answer.reveals, &"fact_lit_unconfirmed_note")
+			return
+	fail_test("expected at least one seed where protective Hana holds fact_lit_unconfirmed_note")

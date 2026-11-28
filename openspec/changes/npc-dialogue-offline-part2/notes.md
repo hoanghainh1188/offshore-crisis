@@ -18,3 +18,6 @@
 - Added test-first unit & integration tests in `test_asking.gd`, `test_dialogue_content.gd`, `test_office_room_targets.gd`, and `test_office_dialogue.gd`.
 - Updated `test_dialogue_panel.gd` (`test_only_npcs_with_content_have_dialogue`) for all 5 NPCs.
 - Full GUT suite: 307/307 tests passed across 39 scripts (43787 asserts). `openspec validate npc-dialogue-offline-part2` passed. Ready for read-only QA (Task 4.2).
+- Addressed QA findings from PR #29:
+  - Replaced `tanaka_hai_followup` `not_held.indirect` so it points to the shared chat / meeting notes without leaking the meaning of `はい`.
+  - Added leak-keyword assertions for `tanaka_hai_followup` and a dedicated test for Hana holding `fact_lit_unconfirmed_note` with `protective` attitude.
