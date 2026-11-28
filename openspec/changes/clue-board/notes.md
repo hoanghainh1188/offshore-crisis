@@ -36,6 +36,9 @@
   Kept as known LOW: pinned positions are not re-clamped if the board area resizes (the
   viewport is fixed at 640×360); drag tests call `_gui_input` directly.
 
+- Antigravity QA (2026-11-28): tested the web build against the acceptance criteria in
+  `specs/clue-board/spec.md`; passed with no issues (reported by Harry).
+
 ## Devlog
 
 - 2026-11-28: proposed and built the clue board: cards for revealed facts, tray, pin, drag,
