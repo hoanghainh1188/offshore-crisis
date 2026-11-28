@@ -29,7 +29,7 @@
 - [x] 5.1 Run the full GUT suite headless; verify 0 failures and no new warnings
 - [x] 5.2 Export with `mkdir -p build/web && godot --headless --path game --export-release "Web" ../build/web/index.html`; verify exit 0
 - [x] 5.3 Web check: Start (console shows `[case] seed <n>` and no root cause), walk to the shelf, open all three documents, confirm Japanese glyphs render, Esc returns to walking, clock keeps moving, no console errors; record results in the change notes
-- [ ] 5.4 Walk through every scenario in `specs/artifact-viewer`, `specs/fact-discovery` and the modified `specs/run-flow` on a visible web build; verify all pass and record pass or fail in the change notes
+- [x] 5.4 Walk through every scenario in `specs/artifact-viewer`, `specs/fact-discovery` and the modified `specs/run-flow` on a visible web build; verify all pass and record pass or fail in the change notes
 
 ## Workflow follow-up
 

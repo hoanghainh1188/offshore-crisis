@@ -41,15 +41,15 @@ clock stays visible above the viewer.
 - Filler lines are written in the same prose style as the facts, so line formatting does
   not give away which lines are facts.
 
-### Not done yet (task 5.4)
+### Scenario walk-through (task 5.4)
 
-The scenario walk-through on a **visible** web build (walk to the shelf, read all three
-documents, Esc, time up while reading) needs a person watching. Every scenario is covered
-by GUT tests.
+2026-11-28: Harry ran every scenario in `specs/artifact-viewer`, `specs/fact-discovery` and
+the modified `specs/run-flow` on a visible web build (walk to the shelf, all three
+documents, Esc and Close, other targets, time up while reading). Result: **pass**.
 
 ## Devlog
 
 - 2026-11-28: Start now generates a seeded case; the Document Shelf opens a viewer with
   Ticket / Chat log / Meeting notes built from the Truth Sheet, and reading reveals facts.
 - Added a 303 KB Noto Sans JP subset so Japanese renders on web; 149/149 GUT tests pass.
-- Visible web walk-through (task 5.4) left for Harry / Antigravity.
+- Harry passed the visible web walk-through (task 5.4).
