@@ -9,6 +9,8 @@ const OFFICE_SCENE: PackedScene = preload("res://office/office_room.tscn")
 const MEETING_SCENE: PackedScene = preload("res://run/meeting/meeting_placeholder.tscn")
 
 @export var tuning: RunTuning = preload("res://run/run_tuning.tres")
+## Seed for this run's case. -1 picks a random seed; tests set a fixed one.
+@export var case_seed: int = -1
 
 ## The screen currently shown; exactly one at a time.
 var current_screen: Node
@@ -21,10 +23,21 @@ func _ready() -> void:
 
 
 func _on_start_pressed() -> void:
+	# The case exists before the office does, so the office can read it in _ready().
+	GameState.start_case(next_case_seed())
 	_show(OFFICE_SCENE.instantiate())
 	# Connect before start(): a zero-length countdown expires inside start().
 	GameState.clock.time_up.connect(_on_time_up, CONNECT_ONE_SHOT)
 	GameState.clock.start(tuning.investigation_seconds)
+
+
+func next_case_seed() -> int:
+	if case_seed >= 0:
+		return case_seed
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	rng.randomize()
+	# Non-negative and short enough for a playtester to read out of the log.
+	return rng.randi_range(0, 999_999)
 
 
 func _on_time_up() -> void:

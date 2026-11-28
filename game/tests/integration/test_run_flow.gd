@@ -12,6 +12,7 @@ func before_each() -> void:
 	var tuning: RunTuning = RunTuning.new()
 	tuning.investigation_seconds = SHORT_RUN
 	_run.tuning = tuning
+	_run.case_seed = 42
 	add_child_autofree(_run)
 	await wait_process_frames(2)
 
@@ -85,3 +86,23 @@ func test_holding_movement_through_time_up() -> void:
 	await _wait_for_meeting()
 	assert_eq(_screen().name, &"MeetingPlaceholder")
 	assert_null(_run.find_child("Player", true, false), "no player on the meeting screen")
+
+
+func test_no_case_on_the_briefing() -> void:
+	assert_null(GameState.truth_sheet)
+
+
+func test_start_generates_the_case_with_the_given_seed() -> void:
+	await _press_start()
+	assert_not_null(GameState.truth_sheet)
+	assert_eq(GameState.truth_sheet.seed, 42)
+
+
+func test_random_seed_when_none_is_set() -> void:
+	var run: Run = (load("res://run/run.tscn") as PackedScene).instantiate() as Run
+	assert_eq(run.case_seed, -1, "default is random")
+	var seeds: Dictionary[int, bool] = {}
+	for i: int in 5:
+		seeds[run.next_case_seed()] = true
+	run.free()
+	assert_gt(seeds.size(), 1, "random seeds differ")

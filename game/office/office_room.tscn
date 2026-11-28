@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="2_player"]
 [ext_resource type="PackedScene" path="res://interaction/interactable.tscn" id="3_interactable"]
 [ext_resource type="PackedScene" path="res://run/hud/office_clock.tscn" id="4_clock"]
+[ext_resource type="PackedScene" path="res://artifacts/artifact_viewer.tscn" id="5_viewer"]
 
 [sub_resource type="RectangleShape2D" id="Shape_WallTop"]
 size = Vector2(640, 16)
@@ -186,3 +187,5 @@ position = Vector2(320, 316)
 position = Vector2(320, 316)
 
 [node name="OfficeClock" parent="." instance=ExtResource("4_clock")]
+
+[node name="ArtifactViewer" parent="." instance=ExtResource("5_viewer")]
