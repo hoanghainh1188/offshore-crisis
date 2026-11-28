@@ -18,4 +18,4 @@
 ## 4. End-to-End Verification & QA
 
 - [x] 4.1 Run the full GUT test suite and `openspec validate npc-dialogue-offline-part2`; verify all tests pass with zero errors and update `notes.md` with implementation/verification results.
-- [ ] 4.2 Read-only QA by Claude Code (or Harry): run tests, run the web export build, verify acceptance criteria in `specs/npc-dialogue/spec.md` and `specs/world-interaction/spec.md`, and report findings.
+- [x] 4.2 Read-only QA by Claude Code (or Harry): run tests, run the web export build, verify acceptance criteria in `specs/npc-dialogue/spec.md` and `specs/world-interaction/spec.md`, and report findings.
