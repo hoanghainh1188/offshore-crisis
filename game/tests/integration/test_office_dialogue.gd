@@ -59,10 +59,38 @@ func test_trang_opens_her_dialogue() -> void:
 	assert_eq(_panel.header_name(), "Trang")
 
 
-func test_meeting_screen_does_not_open_dialogue() -> void:
+func test_minh_opens_his_dialogue_and_logs() -> void:
+	watch_signals(_target("Minh"))
+	await _stand_at(Vector2(150, 296))
+	await _press(KEY_E)
+	assert_true(_panel.is_open())
+	assert_eq(_panel.header_name(), "Minh")
+	assert_eq(_panel.header_role(), "Junior dev")
+	assert_signal_emit_count(_target("Minh"), "interacted", 1)
+
+
+func test_hana_opens_her_dialogue_and_logs() -> void:
+	watch_signals(_target("Hana"))
+	await _stand_at(Vector2(422, 308))
+	await _press(KEY_E)
+	assert_true(_panel.is_open())
+	assert_eq(_panel.header_name(), "Hana")
+	assert_eq(_panel.header_role(), "Comtor (interpreter)")
+	assert_signal_emit_count(_target("Hana"), "interacted", 1)
+
+
+func test_meeting_screen_opens_tanaka_dialogue_and_fits_640x360() -> void:
+	watch_signals(_target("MeetingScreen"))
 	await _stand_at(Vector2(600, 200))
 	await _press(KEY_E)
-	assert_false(_panel.is_open())
+	assert_true(_panel.is_open())
+	assert_eq(_panel.header_name(), "Tanaka-san")
+	assert_eq(_panel.header_role(), "Client PM, Kazegumo Logistics")
+	assert_signal_emit_count(_target("MeetingScreen"), "interacted", 1)
+	var role_label: Label = _panel.get_node("%NpcRole") as Label
+	var panel_node: Control = _panel.get_node("Panel") as Control
+	assert_lte(role_label.get_rect().end.x, panel_node.size.x,
+		"Tanaka-san role fits within 640x360 dialogue panel")
 
 
 func test_shelf_opens_the_viewer_not_the_dialogue() -> void:

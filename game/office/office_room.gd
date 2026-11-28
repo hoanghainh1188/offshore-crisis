@@ -9,6 +9,7 @@ extends Node2D
 @onready var _player: Player = $Player
 @onready var _shelf: Interactable = $Interactables/DocumentShelf
 @onready var _terminal: Interactable = $Interactables/PcTerminal
+@onready var _meeting_screen: Interactable = $Interactables/MeetingScreen
 @onready var _viewer: ArtifactViewer = $ArtifactViewer
 @onready var _dialogue: DialoguePanel = $DialoguePanel
 @onready var _board: ClueBoard = $ClueBoard
@@ -20,6 +21,8 @@ func _ready() -> void:
 	_player.position = _spawn.position
 	_shelf.interacted.connect(_open_viewer.bind(_shelf.display_name))
 	_terminal.interacted.connect(_open_viewer.bind(_terminal.display_name))
+	if _dialogue.has_dialogue(&"tanaka"):
+		_meeting_screen.interacted.connect(_open_dialogue.bind(&"tanaka"))
 	_viewer.closed.connect(_unfreeze_player)
 	_dialogue.closed.connect(_unfreeze_player)
 	_board.opened.connect(_freeze_player)

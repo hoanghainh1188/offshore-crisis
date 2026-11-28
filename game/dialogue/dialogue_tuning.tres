@@ -5,3 +5,5 @@
 [resource]
 script = ExtResource("1_tuning")
 question_cost_minutes = 15
+remote_question_cost_minutes = 30
+remote_npc_ids = Array[StringName]([&"tanaka"])

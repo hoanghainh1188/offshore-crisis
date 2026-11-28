@@ -33,7 +33,10 @@ func _press_esc() -> void:
 func test_only_npcs_with_content_have_dialogue() -> void:
 	assert_true(_panel.has_dialogue(&"linh"))
 	assert_true(_panel.has_dialogue(&"trang"))
-	assert_false(_panel.has_dialogue(&"minh"))
+	assert_true(_panel.has_dialogue(&"minh"))
+	assert_true(_panel.has_dialogue(&"hana"))
+	assert_true(_panel.has_dialogue(&"tanaka"))
+	assert_false(_panel.has_dialogue(&"unknown_npc"))
 
 
 func test_header_shows_name_and_role() -> void:

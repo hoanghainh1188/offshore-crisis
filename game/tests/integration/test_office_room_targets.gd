@@ -5,6 +5,8 @@ extends GutTest
 const EXPECTED: Dictionary = {
 	"npc:linh": "Linh",
 	"npc:trang": "Trang",
+	"npc:minh": "Minh",
+	"npc:hana": "Hana",
 	"object:document_shelf": "Document Shelf",
 	"object:meeting_screen": "Meeting Room Screen",
 	"object:pc_terminal": "PC Terminal",

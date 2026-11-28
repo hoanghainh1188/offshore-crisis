@@ -76,5 +76,5 @@ func ask_question(npc_id: StringName, question: DialogueData.Question) -> Dialog
 	asked_question_ids.append(question.id)
 	if answer.reveals != &"":
 		reveal_fact(answer.reveals)
-	clock.advance_minutes(dialogue_tuning.question_cost_minutes)
+	clock.advance_minutes(dialogue_tuning.cost_for(npc_id))
 	return answer
