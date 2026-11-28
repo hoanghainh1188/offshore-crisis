@@ -96,7 +96,7 @@
         },
         {
           "id": "linh_no_ticket_followup",
-          "text": "No ticket was ever made for the closing-period change. So where did that request come from?",
+          "text": "No ticket was ever made for that export change. So where did that request come from?",
           "fact": "fact_coc_chat_agreement",
           "unlock_any": [
             "fact_coc_no_ticket"
@@ -107,7 +107,7 @@
           },
           "not_held": {
             "defensive": "Requests come in from everywhere. I don't keep track of every message.",
-            "honest": "I'm not sure where it started. The team chat would show it better than my memory."
+            "honest": "I'm not sure where it started. Maybe the client remembers, or it's somewhere in the chats."
           }
         }
       ]

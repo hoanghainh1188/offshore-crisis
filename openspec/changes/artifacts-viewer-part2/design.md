@@ -102,10 +102,12 @@ up to three facts do not dominate the page.
 
 Two entries added to `game/dialogue/dialogue_offline.json`, no code change:
 
-- `linh_no_ticket_followup`: "No ticket was ever made for the closing-period change. So
-  where did that request come from?" — `fact: fact_coc_chat_agreement`,
+- `linh_no_ticket_followup`: "No ticket was ever made for that export change. So where
+  did that request come from?" — `fact: fact_coc_chat_agreement`,
   `unlock_any: [fact_coc_no_ticket]`. Worded so it makes sense whether the ticket or the
-  git log revealed the missing ticket.
+  git log revealed the missing ticket, and does not name the closing period (that is what
+  the answer reveals). The honest "does not hold" answer names no single source, because
+  the chat log, Linh or Tanaka-san may hold the fact.
 - `trang_closing_followup`: "The Japanese spec says 月次締め. Did your tests check the
   closing period?" — no `fact` (Trang cannot hold `fact_lit_jp_spec_closing`), `unlock_any:
   [fact_lit_jp_spec_closing]`. Honest answer: she tested against the English ticket's

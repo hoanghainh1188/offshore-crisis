@@ -23,7 +23,7 @@
     ]
   },
   "chat_log": {
-    "title": "Team chat: #kazegumo-project",
+    "title": "Shared chat: #kazegumo-project",
     "lines": [
       "Linh posted that the release 2.3 build is on staging.",
       "Trang wrote that she is starting regression tests on the export screen.",
