@@ -26,4 +26,4 @@
 
 - [x] 4.1 Run the full GUT suite headless; verify 0 failures and no new warnings
 - [x] 4.2 Export with `mkdir -p build/web && godot --headless --path game --export-release "Web" ../build/web/index.html`; verify exit 0
-- [ ] 4.3 Web walk-through in a browser: open the viewer from the shelf and from the PC Terminal, read Git log and Spec document (Japanese visible), unlock one follow-up by reading, close with Esc; verify no console errors and record the result in `notes.md`
+- [x] 4.3 Web walk-through in a browser: open the viewer from the shelf and from the PC Terminal, read Git log and Spec document (Japanese visible), unlock one follow-up by reading, close with Esc; verify no console errors and record the result in `notes.md`

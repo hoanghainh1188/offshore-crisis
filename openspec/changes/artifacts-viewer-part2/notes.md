@@ -19,8 +19,13 @@
 - Code review: no critical/high findings; fixed two vague loader messages and a magic
   seed fallback. Kept as known LOW: the terminal log-line test checks the format, not a
   printed line (same as the shelf in part 1).
-- Web walk-through (4.3): pending; the build runs and shows the PC Terminal, but the
-  Browser pane was hidden so the game loop paused before the walk-through.
+- Web walk-through (4.3): passed in Chrome on a fresh export. Opened the viewer from the
+  Document Shelf and the PC Terminal (heading names the source, same five documents in
+  order), read Git log (it held `fact_coc_no_ticket` this run) and Spec document (日本語原文
+  and the JP lines draw as glyphs, the body scrolls via the scrollbar), then Linh listed the
+  "No ticket was ever made..." follow-up and answered it (holds answer, clock +15 min).
+  Esc closed the viewer and the dialogue. Console: the three `[interact]` lines, no errors.
+  The in-app Browser pane throttles timers to ~1 fps, so it cannot run the game loop.
 
 ## Devlog
 
@@ -33,3 +38,5 @@
   shelf and the new PC Terminal; part 1 documents keep their text per seed.
 - Two follow-ups (Linh, Trang) unlock from reading; 232 GUT tests pass, web export OK.
 - A renamed helper had silently disabled `test_run_viewer.gd`; fixed and noted.
+- 2026-11-28 (4.3): web walk-through passed in Chrome: both entry points, JP glyphs and a
+  follow-up unlocked by reading the git log, no console errors.
