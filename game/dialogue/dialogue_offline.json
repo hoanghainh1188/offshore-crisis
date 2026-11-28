@@ -186,6 +186,231 @@
           }
         }
       ]
+    },
+    "minh": {
+      "questions": [
+        {
+          "id": "minh_role_smalltalk",
+          "text": "How are you holding up after the client escalation?",
+          "not_held": {
+            "nervous": "Honestly, I'm pretty stressed. I just hope my export code isn't the reason the client is mad."
+          }
+        },
+        {
+          "id": "minh_export_spec",
+          "text": "Which spec or ticket did you follow when building the monthly export?",
+          "fact": "fact_coc_no_ticket",
+          "holds": {
+            "nervous": "I built the export straight from the original spec! Nobody ever made a ticket for any change, so I had nothing else to go on."
+          },
+          "not_held": {
+            "nervous": "I just picked up the tasks assigned to me on the board. Linh handled the tickets and spec updates."
+          }
+        },
+        {
+          "id": "minh_crash_fix",
+          "text": "I saw a fix from you two days before release. What was that?",
+          "fact": "rh_junior_null_fix",
+          "holds": {
+            "nervous": "Oh! That was a null-pointer crash on the export screen when a filter was empty. I fixed it two days before release—I didn't touch the grouping logic!"
+          },
+          "not_held": {
+            "nervous": "I pushed a couple of small cleanup commits, I think, but I'd have to look at the git log to be sure."
+          }
+        },
+        {
+          "id": "minh_closing_term",
+          "text": "Did anyone mention a closing period or 締め日 while you were coding?",
+          "not_held": {
+            "nervous": "Not to me! I only read the English tickets, and nobody told me about any Japanese closing dates."
+          }
+        },
+        {
+          "id": "minh_ticket_followup",
+          "text": "Ticket OC-142 says 'calendar month'. Did you ever check if there was a newer ticket?",
+          "fact": "fact_coc_no_ticket",
+          "unlock_any": [
+            "fact_lit_ticket_calendar"
+          ],
+          "holds": {
+            "nervous": "I looked on the board, and there was no new ticket at all! So I assumed the original spec was still the right one."
+          },
+          "not_held": {
+            "nervous": "I just worked off whatever Linh put in my sprint column. You'd have to check the ticket history."
+          }
+        },
+        {
+          "id": "minh_chat_followup",
+          "text": "Linh agreed to a closing-period change in chat. Why didn't you build that?",
+          "fact": "fact_coc_no_ticket",
+          "unlock_any": [
+            "fact_coc_chat_agreement"
+          ],
+          "holds": {
+            "nervous": "Wait, really?! Nobody created a ticket for that chat agreement, so I never knew! I built the export from the original spec."
+          },
+          "not_held": {
+            "nervous": "I wasn't following every chat thread while coding. I only check tickets assigned to me."
+          }
+        }
+      ]
+    },
+    "hana": {
+      "questions": [
+        {
+          "id": "hana_workload_smalltalk",
+          "text": "How has the communication been between our team and Kazegumo Logistics?",
+          "not_held": {
+            "protective": "Busy, as always. I translate what I'm given as quickly as I can so the devs aren't blocked.",
+            "honest": "A bit rushed during release 2.3. There were a lot of messages flying around in both languages."
+          }
+        },
+        {
+          "id": "hana_jp_spec",
+          "text": "What does the original Japanese spec say about how the export groups rows?",
+          "fact": "fact_lit_jp_spec_closing",
+          "holds": {
+            "protective": "It says 月次締め—their monthly closing period ending on the 20th. Anyone reading the Japanese spec carefully would see that.",
+            "honest": "The Japanese spec says 月次締め, which is the client's monthly closing period ending on the 20th."
+          },
+          "not_held": {
+            "protective": "I translated the documents handed to me. The spec itself is in the document folder if you want to check it.",
+            "honest": "I don't have the Japanese wording memorized right now, sorry. The spec document in the folder has the exact text."
+          }
+        },
+        {
+          "id": "hana_translation_note",
+          "text": "Were there any terms in the spec you weren't sure how to translate?",
+          "fact": "fact_lit_unconfirmed_note",
+          "holds": {
+            "protective": "I wrote a note saying 締め was unclear and I assumed calendar month, marked 'to confirm'. Nobody followed up with the client, so what else could I do?",
+            "honest": "Yes. I wrote in my note: '締め unclear, assumed calendar month, to confirm'. Nobody ended up asking the client, including me."
+          },
+          "not_held": {
+            "protective": "If anything had been unclear, I would have flagged it for confirmation.",
+            "honest": "Nothing stands out in my memory, though my translation notes would be in the chat log if I left any."
+          }
+        },
+        {
+          "id": "hana_meeting_reply",
+          "text": "At the design review, how did Tanaka-san respond when the team proposed calendar month?",
+          "fact": "fact_py_hai_recorded",
+          "holds": {
+            "protective": "He said はい, and the meeting notes recorded it as 'はい (approved)'. That's literally what he said.",
+            "honest": "He said はい, and the meeting notes recorded his reply as 'はい (approved)'."
+          },
+          "not_held": {
+            "protective": "I wasn't the one taking official minutes for every point. Check the meeting notes.",
+            "honest": "I'm not sure how his exact reply was written down. The meeting notes should show it."
+          }
+        },
+        {
+          "id": "hana_ticket_followup",
+          "text": "The English ticket says 'calendar month', but the Japanese spec says 月次締め. Why?",
+          "fact": "fact_lit_unconfirmed_note",
+          "unlock_any": [
+            "fact_lit_ticket_calendar",
+            "fact_lit_jp_spec_closing"
+          ],
+          "holds": {
+            "protective": "Because I flagged '締め unclear, assumed calendar month, to confirm' in my note! Nobody asked the client to confirm it.",
+            "honest": "My translation note said '締め unclear, assumed calendar month, to confirm', and nobody followed up with the client."
+          },
+          "not_held": {
+            "protective": "I don't write the Jira tickets. You should check who copied the wording into OC-142.",
+            "honest": "I'm not sure how the ticket ended up with that phrasing. I'd need to check the chat log."
+          }
+        },
+        {
+          "id": "hana_hai_followup",
+          "text": "Linh says the team proposed calendar month at the design review. How was Tanaka-san's reply recorded?",
+          "fact": "fact_py_hai_recorded",
+          "unlock_any": [
+            "fact_py_meeting_proposal"
+          ],
+          "holds": {
+            "protective": "It was recorded as 'はい (approved)' in the meeting notes. We had no reason to doubt a yes.",
+            "honest": "The meeting notes recorded Tanaka-san's reply as 'はい (approved)'."
+          },
+          "not_held": {
+            "protective": "I interpreted during the call, I didn't sign off on the notes.",
+            "honest": "I don't remember the exact note entry. You can check the meeting notes on the shelf."
+          }
+        },
+        {
+          "id": "hana_csv_smalltalk",
+          "text": "Did Tanaka-san mention any trouble opening the exported CSV files?",
+          "not_held": {
+            "protective": "He mentioned the numbers were wrong—that's the main thing.",
+            "honest": "I didn't hear him complain about opening the files to me, just that the monthly totals didn't match."
+          }
+        }
+      ]
+    },
+    "tanaka": {
+      "questions": [
+        {
+          "id": "tanaka_escalation_smalltalk",
+          "text": "Thank you for taking this call, Tanaka-san. Which part of the delivery didn't match your expectations?",
+          "not_held": {
+            "indirect": "We appreciate your team's hard work. However, our accounting department found that the monthly export totals are slightly different from what we expected."
+          }
+        },
+        {
+          "id": "tanaka_chat_request",
+          "text": "Did your team request any change to the export grouping in the shared chat?",
+          "fact": "fact_coc_chat_agreement",
+          "holds": {
+            "indirect": "Yes, we mentioned in the shared chat that we needed the export switched to our closing period, and Linh-san kindly replied 'OK, will do'."
+          },
+          "not_held": {
+            "indirect": "There were many messages in the shared chat over the past few weeks, so it may be best to review the chat history directly."
+          }
+        },
+        {
+          "id": "tanaka_design_review",
+          "text": "At the design review, what was your understanding of the export grouping?",
+          "fact": "fact_py_check_internally",
+          "holds": {
+            "indirect": "When your team proposed calendar month, I said I understood and would check with our accounting team. I sent a follow-up in the shared chat later, though we didn't receive a reply."
+          },
+          "not_held": {
+            "indirect": "It was a busy design review with many topics. Perhaps the meeting notes or the spec document capture the details more clearly."
+          }
+        },
+        {
+          "id": "tanaka_csv_headers",
+          "text": "Did your accounting team notice anything else when opening the exported CSVs?",
+          "fact": "rh_csv_encoding",
+          "holds": {
+            "indirect": "Ah, yes—on our office PCs, the Japanese CSV headers appeared with broken characters. We weren't sure if that was related, so we thought we should mention it."
+          },
+          "not_held": {
+            "indirect": "Our main concern right now is simply the monthly grouping of the figures."
+          }
+        },
+        {
+          "id": "tanaka_closing_smalltalk",
+          "text": "Could you confirm how your monthly closing period works for accounting?",
+          "not_held": {
+            "indirect": "Of course. At Kazegumo Logistics, our accounting month closes on the 20th of each month, from the 21st to the 20th."
+          }
+        },
+        {
+          "id": "tanaka_hai_followup",
+          "text": "Our meeting notes record your reply as 'はい (approved)'. What did you mean at the time?",
+          "fact": "fact_py_check_internally",
+          "unlock_any": [
+            "fact_py_hai_recorded"
+          ],
+          "holds": {
+            "indirect": "Ah, I see how that could be misunderstood. By はい I meant 'I understand, I will check with accounting'. I later posted in the shared chat, though it went unanswered."
+          },
+          "not_held": {
+            "indirect": "In Japanese meetings we often say はい simply to show we are listening carefully. I'm sorry if the notes were unclear."
+          }
+        }
+      ]
     }
   }
 }

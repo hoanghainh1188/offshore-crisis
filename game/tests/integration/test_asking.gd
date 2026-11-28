@@ -85,3 +85,41 @@ func test_asked_state_is_per_run() -> void:
 	GameState.ask_question(&"linh", _question(&"linh", &"linh_release_work"))
 	GameState.reset_run()
 	assert_false(GameState.is_asked(&"linh_release_work"), "reset clears asked")
+
+
+func _remote_question(id: StringName, fact_id: StringName) -> DialogueData.Question:
+	var question: DialogueData.Question = DialogueData.Question.new()
+	question.id = id
+	question.text = "Remote test question"
+	question.fact = fact_id
+	question.holds = {&"indirect": "We did ask in chat."}
+	question.not_held = {&"indirect": "I would need to check."}
+	return question
+
+
+func test_remote_tuning_defaults_to_thirty_minutes() -> void:
+	var tuning: DialogueTuning = load("res://dialogue/dialogue_tuning.tres") as DialogueTuning
+	assert_eq(tuning.remote_question_cost_minutes, 30)
+	assert_eq(tuning.cost_for(&"tanaka"), 30)
+	assert_eq(tuning.cost_for(&"linh"), 15)
+
+
+func test_remote_first_ask_costs_thirty_minutes_and_repeat_is_free() -> void:
+	_start_case_where(&"fact_coc_chat_agreement", "npc:tanaka")
+	var question: DialogueData.Question = _remote_question(&"tanaka_test_cost", &"fact_coc_chat_agreement")
+	var first: DialogueAnswer = GameState.ask_question(&"tanaka", question)
+	assert_eq(first.reveals, &"fact_coc_chat_agreement")
+	assert_eq(_office_time(), "09:30")
+	var second: DialogueAnswer = GameState.ask_question(&"tanaka", question)
+	assert_eq(second.text, first.text)
+	assert_eq(_office_time(), "09:30")
+	assert_signal_emit_count(GameState, "fact_revealed", 1)
+
+
+func test_remote_question_at_four_thirty_five_ends_the_day() -> void:
+	_start_case_where(&"fact_coc_chat_agreement", "npc:tanaka")
+	GameState.clock.advance_minutes(455)
+	watch_signals(GameState.clock)
+	GameState.ask_question(&"tanaka", _remote_question(&"tanaka_test_end", &"fact_coc_chat_agreement"))
+	assert_signal_emit_count(GameState.clock, "time_up", 1)
+	assert_has(GameState.revealed_fact_ids, &"fact_coc_chat_agreement")

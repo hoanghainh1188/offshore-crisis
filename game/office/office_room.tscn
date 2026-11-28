@@ -32,6 +32,9 @@ size = Vector2(96, 32)
 [sub_resource type="RectangleShape2D" id="Shape_CoffeeCounter"]
 size = Vector2(88, 24)
 
+[sub_resource type="RectangleShape2D" id="Shape_ComtorDesk"]
+size = Vector2(88, 24)
+
 [node name="OfficeRoom" type="Node2D"]
 script = ExtResource("1_room")
 
@@ -108,6 +111,14 @@ shape = SubResource("Shape_CoffeeCounter")
 color = Color(0.45, 0.33, 0.25, 1)
 polygon = PackedVector2Array(-44, -12, 44, -12, 44, 12, -44, 12)
 
+[node name="ComtorDesk" type="CollisionShape2D" parent="Solids"]
+position = Vector2(480, 288)
+shape = SubResource("Shape_ComtorDesk")
+
+[node name="Visual" type="Polygon2D" parent="Solids/ComtorDesk"]
+color = Color(0.55, 0.42, 0.3, 1)
+polygon = PackedVector2Array(-44, -12, 44, -12, 44, 12, -44, 12)
+
 [node name="EntranceDoor" type="ColorRect" parent="."]
 offset_left = 296.0
 offset_top = 344.0
@@ -145,6 +156,13 @@ offset_top = 326.0
 theme_override_colors/font_color = Color(0.3, 0.3, 0.3, 1)
 theme_override_font_sizes/font_size = 8
 text = "Entrance"
+
+[node name="Label4" type="Label" parent="ZoneLabels"]
+offset_left = 446.0
+offset_top = 256.0
+theme_override_colors/font_color = Color(0.3, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 8
+text = "Comtor desk"
 
 [node name="Interactables" type="Node2D" parent="."]
 
@@ -190,6 +208,22 @@ display_name = "PC Terminal"
 body_size = Vector2(16, 16)
 color = Color(0.25, 0.4, 0.5, 1)
 label_offset = Vector2(-6, 0)
+
+[node name="Minh" parent="Interactables" instance=ExtResource("3_interactable")]
+position = Vector2(150, 316)
+kind = 0
+id = &"minh"
+display_name = "Minh"
+body_size = Vector2(12, 16)
+color = Color(0.35, 0.65, 0.75, 1)
+
+[node name="Hana" parent="Interactables" instance=ExtResource("3_interactable")]
+position = Vector2(422, 288)
+kind = 0
+id = &"hana"
+display_name = "Hana"
+body_size = Vector2(12, 16)
+color = Color(0.75, 0.55, 0.35, 1)
 
 [node name="EntranceSpawn" type="Marker2D" parent="."]
 position = Vector2(320, 316)
