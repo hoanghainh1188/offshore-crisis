@@ -1,5 +1,5 @@
 extends GutTest
-## Document Shelf -> viewer in the real office room (specs/artifact-viewer).
+## Document Shelf and PC Terminal -> viewer in the real office room (specs/artifact-viewer).
 
 var _room: OfficeRoom
 var _player: Player
@@ -95,3 +95,49 @@ func test_player_can_interact_again_after_closing() -> void:
 	await _press(KEY_ESCAPE)
 	await wait_physics_frames(3)
 	assert_eq(_player.try_interact(), _target("DocumentShelf"))
+
+
+# --- PC Terminal ---
+
+const TERMINAL_SPOT: Vector2 = Vector2(60, 112)
+
+
+func test_pc_terminal_opens_the_same_viewer() -> void:
+	var terminal: Interactable = _target("PcTerminal")
+	watch_signals(terminal)
+	await _stand_at(TERMINAL_SPOT)
+	await _press(KEY_E)
+	assert_true(_viewer.is_open())
+	assert_signal_emit_count(terminal, "interacted", 1)
+	assert_eq(_viewer.heading_text(), "PC Terminal")
+	assert_eq(_viewer.listed_titles(),
+		["Ticket", "Git log", "Chat log", "Spec document", "Meeting notes"] as Array[String])
+
+
+func test_pc_terminal_logs_its_interaction_line() -> void:
+	var terminal: Interactable = _target("PcTerminal")
+	assert_eq(InteractionLog.format(terminal.kind_name(), terminal.id, terminal.display_name),
+		'[interact] object:pc_terminal "PC Terminal"')
+
+
+func test_only_the_terminal_is_in_range_at_its_spot() -> void:
+	await _stand_at(TERMINAL_SPOT)
+	assert_eq(_player._targets_in_range, [_target("PcTerminal")] as Array[Interactable])
+
+
+func test_shelf_after_terminal_shows_shelf_heading() -> void:
+	await _stand_at(TERMINAL_SPOT)
+	await _press(KEY_E)
+	await _press(KEY_ESCAPE)
+	await _open_from_shelf()
+	assert_true(_viewer.is_open())
+	assert_eq(_viewer.heading_text(), "Document Shelf")
+
+
+func test_player_frozen_while_reading_from_terminal() -> void:
+	await _stand_at(TERMINAL_SPOT)
+	await _press(KEY_E)
+	var start: Vector2 = _player.position
+	Input.action_press(&"move_right")
+	await wait_physics_frames(10)
+	assert_eq(_player.position, start)

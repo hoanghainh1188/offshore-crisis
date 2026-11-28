@@ -93,6 +93,22 @@
             "defensive": "Updating the spec isn't my job. Talk to whoever owns it.",
             "honest": "I'd need to check my messages before I answer that."
           }
+        },
+        {
+          "id": "linh_no_ticket_followup",
+          "text": "No ticket was ever made for that export change. So where did that request come from?",
+          "fact": "fact_coc_chat_agreement",
+          "unlock_any": [
+            "fact_coc_no_ticket"
+          ],
+          "holds": {
+            "defensive": "The client asked for it in the shared chat and I replied 'OK, will do'. Writing the ticket wasn't on me.",
+            "honest": "From the shared chat. The client asked to switch to the closing period and I replied 'OK, will do'. I never turned it into a ticket."
+          },
+          "not_held": {
+            "defensive": "Requests come in from everywhere. I don't keep track of every message.",
+            "honest": "I'm not sure where it started. Maybe the client remembers, or it's somewhere in the chats."
+          }
         }
       ]
     },
@@ -157,6 +173,16 @@
           },
           "not_held": {
             "honest": "I can't tell you about chat. I only test against what's in the ticket and the spec."
+          }
+        },
+        {
+          "id": "trang_closing_followup",
+          "text": "The Japanese spec says 月次締め. Did your tests check the closing period?",
+          "unlock_any": [
+            "fact_lit_jp_spec_closing"
+          ],
+          "not_held": {
+            "honest": "No. I tested what the English ticket asked for. Nobody mentioned a closing period to me."
           }
         }
       ]

@@ -1,12 +1,13 @@
 class_name OfficeRoom
 extends Node2D
 ## The single office room (GDD section 12). Places the player at the entrance on load and
-## opens panels from targets: the Document Shelf opens the artifact viewer
-## (specs/artifact-viewer), NPCs with dialogue open the dialogue panel (specs/npc-dialogue).
+## opens panels from targets: the Document Shelf and the PC Terminal open the artifact
+## viewer (specs/artifact-viewer), NPCs with dialogue open the dialogue panel (specs/npc-dialogue).
 
 @onready var _spawn: Marker2D = $EntranceSpawn
 @onready var _player: Player = $Player
 @onready var _shelf: Interactable = $Interactables/DocumentShelf
+@onready var _terminal: Interactable = $Interactables/PcTerminal
 @onready var _viewer: ArtifactViewer = $ArtifactViewer
 @onready var _dialogue: DialoguePanel = $DialoguePanel
 
@@ -15,7 +16,8 @@ func _ready() -> void:
 	# The marker is the source of truth for the start position, so moving it in the
 	# editor is enough to change where the run begins.
 	_player.position = _spawn.position
-	_shelf.interacted.connect(_open_viewer)
+	_shelf.interacted.connect(_open_viewer.bind(_shelf.display_name))
+	_terminal.interacted.connect(_open_viewer.bind(_terminal.display_name))
 	_viewer.closed.connect(_unfreeze_player)
 	_dialogue.closed.connect(_unfreeze_player)
 	for node: Node in $Interactables.get_children():
@@ -24,8 +26,8 @@ func _ready() -> void:
 			target.interacted.connect(_open_dialogue.bind(target.id))
 
 
-func _open_viewer() -> void:
-	_viewer.open()
+func _open_viewer(source_name: String) -> void:
+	_viewer.open(source_name)
 	_freeze_player()
 
 

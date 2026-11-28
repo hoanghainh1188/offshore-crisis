@@ -20,7 +20,7 @@ func _start_run(seconds: float) -> void:
 
 func _open_viewer() -> ArtifactViewer:
 	var viewer: ArtifactViewer = (_run.current_screen as OfficeRoom).get_node("ArtifactViewer") as ArtifactViewer
-	(_run.current_screen as OfficeRoom)._open_viewer()
+	(_run.current_screen as OfficeRoom)._open_viewer("Document Shelf")
 	return viewer
 
 

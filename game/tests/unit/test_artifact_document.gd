@@ -31,7 +31,10 @@ func test_filler_has_every_supported_type() -> void:
 	assert_not_null(_filler, ArtifactFiller.last_error)
 	for type: StringName in ArtifactDocument.TYPES:
 		assert_false(_filler.title_for(type).is_empty(), "%s title" % type)
+		assert_gt(_filler.lines_for(type).size(), 0, "%s filler lines" % type)
+	for type: StringName in [&"ticket", &"chat_log", &"meeting_notes"]:
 		assert_between(_filler.lines_for(type).size(), 5, 7, "%s filler lines" % type)
+	assert_between(_filler.lines_for(&"git_log").size(), 6, 8, "git_log commits")
 
 
 func test_filler_missing_type_is_refused() -> void:
@@ -41,8 +44,23 @@ func test_filler_missing_type_is_refused() -> void:
 
 
 func test_types_are_listed_in_spec_order() -> void:
-	assert_eq(ArtifactDocument.TYPES, [&"ticket", &"chat_log", &"meeting_notes"] as Array[StringName])
+	assert_eq(ArtifactDocument.TYPES,
+		[&"ticket", &"git_log", &"chat_log", &"spec_doc", &"meeting_notes"] as Array[StringName])
 	assert_eq(ArtifactDocument.display_name(&"chat_log"), "Chat log")
+	assert_eq(ArtifactDocument.display_name(&"git_log"), "Git log")
+	assert_eq(ArtifactDocument.display_name(&"spec_doc"), "Spec document")
+
+
+func test_part1_documents_unchanged_per_seed() -> void:
+	# Hashes captured from the part 1 build: reordering the list must not move facts.
+	var expected: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(
+		"res://tests/fixtures/artifacts/part1_document_hashes.json"))
+	for seed_value: int in range(1, SEEDS + 1):
+		var sheet: TruthSheet = _sheet(seed_value)
+		for type: String in ["ticket", "chat_log", "meeting_notes"]:
+			var doc: ArtifactDocument = ArtifactDocument.build(sheet, StringName(type), _filler)
+			assert_eq("\n".join(doc.lines).md5_text(), expected[str(seed_value)][type],
+				"seed %d %s" % [seed_value, type])
 
 
 # --- document content ---
@@ -107,3 +125,44 @@ func test_facts_are_not_always_at_the_same_place() -> void:
 		var first_fact: String = _fact_texts(sheet)[doc.fact_ids[0]]
 		positions[doc.lines.find(first_fact)] = true
 	assert_gt(positions.size(), 3)
+
+
+# --- part 2 content (git log, spec document) ---
+
+func test_spec_fact_sections_name_facts_the_spec_can_hold() -> void:
+	var holdable: Array[StringName] = []
+	for variant: CaseTemplate.Variant in _template.variants:
+		for fact: CaseTemplate.Fact in variant.chain:
+			if fact.holders.has("artifact:spec_doc"):
+				holdable.append(fact.id)
+	for fact: CaseTemplate.Fact in _template.red_herrings:
+		if fact.holders.has("artifact:spec_doc"):
+			holdable.append(fact.id)
+	assert_gt(_filler.placed_fact_ids(&"spec_doc").size(), 0)
+	for fact_id: StringName in _filler.placed_fact_ids(&"spec_doc"):
+		assert_has(holdable, fact_id, "fact_sections names %s" % fact_id)
+	for fact_id: StringName in holdable:
+		assert_has(_filler.placed_fact_ids(&"spec_doc"), fact_id, "%s has a section" % fact_id)
+
+
+func test_spec_document_has_the_three_sections() -> void:
+	assert_eq(_filler.headings_for(&"spec_doc"),
+		["Revision history", "Japanese original (日本語原文)", "English translation"] as Array[String])
+
+
+func test_git_log_filler_lines_are_commits() -> void:
+	var commit: RegEx = RegEx.create_from_string("^[0-9a-f]{7}  \\d{4}-\\d{2}-\\d{2}  \\S+ +\\S.*$")
+	for line: String in _filler.lines_for(&"git_log"):
+		assert_not_null(commit.search(line), "commit form: %s" % line)
+
+
+func test_git_log_shows_timezone_change_when_it_holds_it() -> void:
+	var found: bool = false
+	for seed_value: int in range(1, SEEDS + 1):
+		var sheet: TruthSheet = _sheet(seed_value)
+		if sheet.knowledge.get(&"rh_timezone_config", "") != "artifact:git_log":
+			continue
+		var doc: ArtifactDocument = ArtifactDocument.build(sheet, &"git_log", _filler)
+		assert_has(doc.lines, _fact_texts(sheet)[&"rh_timezone_config"])
+		found = true
+	assert_true(found, "some seed gives the timezone change to the git log")

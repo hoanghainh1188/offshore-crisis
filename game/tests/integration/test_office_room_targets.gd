@@ -1,11 +1,13 @@
 extends GutTest
-## specs/world-interaction: the prototype room contains the four required targets.
+## specs/world-interaction: the prototype room contains the required targets, plus the
+## PC Terminal from specs/artifact-viewer.
 
 const EXPECTED: Dictionary = {
 	"npc:linh": "Linh",
 	"npc:trang": "Trang",
 	"object:document_shelf": "Document Shelf",
 	"object:meeting_screen": "Meeting Room Screen",
+	"object:pc_terminal": "PC Terminal",
 }
 
 var _room: OfficeRoom
@@ -23,7 +25,7 @@ func _targets() -> Array[Interactable]:
 	return found
 
 
-func test_room_has_the_four_spec_targets() -> void:
+func test_room_has_the_spec_targets() -> void:
 	var keys: Dictionary = {}
 	for target: Interactable in _targets():
 		keys["%s:%s" % [target.kind_name(), target.id]] = target.display_name

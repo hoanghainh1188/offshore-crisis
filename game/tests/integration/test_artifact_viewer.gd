@@ -47,7 +47,50 @@ func test_hidden_until_opened() -> void:
 
 func test_lists_types_in_spec_order() -> void:
 	_viewer.open()
-	assert_eq(_viewer.listed_titles(), ["Ticket", "Chat log", "Meeting notes"] as Array[String])
+	assert_eq(_viewer.listed_titles(),
+		["Ticket", "Git log", "Chat log", "Spec document", "Meeting notes"] as Array[String])
+
+
+func test_heading_names_where_the_viewer_was_opened() -> void:
+	_viewer.open()
+	assert_eq(_viewer.heading_text(), "Document Shelf")
+	_viewer.close()
+	_viewer.open("PC Terminal")
+	assert_eq(_viewer.heading_text(), "PC Terminal")
+	assert_eq(_viewer.listed_titles().size(), 5)
+
+
+func test_spec_document_shows_its_section_headings() -> void:
+	_viewer.open()
+	_viewer.document_button(&"spec_doc").pressed.emit()
+	for heading: String in ["Revision history", "Japanese original (日本語原文)", "English translation"]:
+		assert_has(_viewer.shown_lines(), heading)
+		assert_string_contains(_viewer.heading_text() + _viewer.body_text(), heading)
+
+
+## First seed where the given part 2 type holds a fact, so the reveal test is meaningful.
+func _seed_where_type_holds(type: StringName) -> int:
+	var template: CaseTemplate = GameState.case_template()
+	for seed_value: int in range(1, 301):
+		var sheet: TruthSheet = CaseGenerator.new().generate(template, seed_value)
+		if sheet.knowledge.values().has("artifact:%s" % type):
+			return seed_value
+	return -1
+
+
+func test_opening_git_log_and_spec_reveals_their_facts() -> void:
+	for type: StringName in [&"git_log", &"spec_doc"]:
+		var seed_value: int = _seed_where_type_holds(type)
+		assert_gt(seed_value, 0, "some seed gives %s a fact" % type)
+		GameState.reset_run()
+		GameState.start_case(seed_value)
+		_viewer.open()
+		_viewer.document_button(type).pressed.emit()
+		var expected: ArtifactDocument = _expected(type)
+		assert_gt(expected.fact_ids.size(), 0)
+		for fact_id: StringName in expected.fact_ids:
+			assert_has(GameState.revealed_fact_ids, fact_id, "%s reveals %s" % [type, fact_id])
+		_viewer.close()
 
 
 func test_first_document_button_has_focus_on_open() -> void:
@@ -128,3 +171,15 @@ func test_missing_filler_disables_documents_instead_of_crashing() -> void:
 	assert_true(viewer.document_button(&"ticket").disabled)
 	viewer.document_button(&"ticket").pressed.emit()
 	assert_eq(viewer.shown_lines(), [] as Array[String])
+
+
+func test_reading_costs_no_game_time() -> void:
+	GameState.clock.start(900.0)
+	GameState.clock.pause(&"test")
+	GameState.clock.advance_minutes(60)
+	assert_eq(RunClock.format_office_time(GameState.clock.office_minutes()), "10:00")
+	_viewer.open()
+	for type: StringName in [&"git_log", &"spec_doc"]:
+		_viewer.document_button(type).pressed.emit()
+	await wait_process_frames(5)
+	assert_eq(RunClock.format_office_time(GameState.clock.office_minutes()), "10:00")

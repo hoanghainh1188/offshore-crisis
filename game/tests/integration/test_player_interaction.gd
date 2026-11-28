@@ -82,6 +82,7 @@ func test_every_target_is_reachable_and_interactable() -> void:
 		"DocumentShelf": Vector2(286, 92),
 		"Trang": Vector2(500, 136),
 		"MeetingScreen": Vector2(600, 200),
+		"PcTerminal": Vector2(60, 112),
 	}
 	for node_name: String in approach:
 		await _stand_at(approach[node_name])

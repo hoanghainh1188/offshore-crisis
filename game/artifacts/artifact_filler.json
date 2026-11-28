@@ -10,8 +10,20 @@
       "Minh commented that the column order matches the sample file from the client."
     ]
   },
+  "git_log": {
+    "title": "Git log: kazegumo-export (main)",
+    "lines": [
+      "9f3c2a1  2026-10-02  Minh   Add invoice export screen",
+      "4b7e0d9  2026-10-05  Minh   Add CSV writer for invoice rows",
+      "c21a8f4  2026-10-06  Linh   Review fixes: rename export columns",
+      "7d90b3e  2026-10-08  Minh   Use column order from the client's sample file",
+      "e5f1c62  2026-10-09  Trang  Add export test data for staging",
+      "0a6d4b8  2026-10-13  Linh   Bump version to 2.3",
+      "b38e7f0  2026-10-14  Linh   Merge release/2.3 into main"
+    ]
+  },
   "chat_log": {
-    "title": "Team chat: #kazegumo-project",
+    "title": "Shared chat: #kazegumo-project",
     "lines": [
       "Linh posted that the release 2.3 build is on staging.",
       "Trang wrote that she is starting regression tests on the export screen.",
@@ -20,6 +32,42 @@
       "Linh reminded everyone to finish the release notes by Friday.",
       "Trang reported regression done, with two minor UI issues logged."
     ]
+  },
+  "spec_doc": {
+    "title": "Spec KZ-EXP-01: Monthly accounting export",
+    "sections": [
+      {
+        "id": "revisions",
+        "heading": "Revision history",
+        "lines": [
+          "v1.0  2026-09-02  Hana  First version, translated from the client's Japanese spec.",
+          "v1.1  2026-09-16  Linh  Added the list of CSV columns.",
+          "v1.2  2026-09-24  Hana  Fixed typos in the English translation."
+        ]
+      },
+      {
+        "id": "jp",
+        "heading": "Japanese original (日本語原文)",
+        "lines": [
+          "目的：請求データをCSVファイルで出力する。",
+          "出力項目：請求番号、顧客名、金額、請求日。",
+          "出力ボタンは請求一覧画面に置く。"
+        ]
+      },
+      {
+        "id": "en",
+        "heading": "English translation",
+        "lines": [
+          "Purpose: export invoice data as a CSV file.",
+          "Columns: invoice number, customer name, amount, invoice date.",
+          "The export button is on the invoice list screen."
+        ]
+      }
+    ],
+    "fact_sections": {
+      "fact_coc_spec_unchanged": "revisions",
+      "fact_lit_jp_spec_closing": "jp"
+    }
   },
   "meeting_notes": {
     "title": "Meeting notes: design review and weekly syncs",
