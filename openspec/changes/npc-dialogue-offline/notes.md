@@ -20,6 +20,11 @@ clock shows 09:30 (2 × 15 minutes) above the panel.
 
 Export exits 0; the game loads and Start works with no console errors.
 
+### Content check (task 2.4)
+
+Harry read `game/dialogue/dialogue_offline.json` on 2026-11-28 and approved it: no
+"does not hold" line contradicts a case, and no line gives away the root cause.
+
 ### Implementation notes
 
 - Content check by an independent code review found five "does not hold" lines that
@@ -35,7 +40,6 @@ Export exits 0; the game loads and Start works with no console errors.
 
 ### Pending
 
-- Task 2.4: Harry's content check of `game/dialogue/dialogue_offline.json`.
 - Task 5.3: scenario walk-through on a visible web build.
 
 ## Devlog

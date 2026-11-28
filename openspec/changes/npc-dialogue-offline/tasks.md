@@ -10,7 +10,7 @@
 - [x] 2.1 Add `DialogueData` loader with fixtures in `game/tests/fixtures/dialogue/` (valid minimal, unknown NPC id, unknown fact id, repeated question id, missing attitude answer, `holds` without `fact`) and GUT tests that each error names the file and the problem; verify RED then GREEN
 - [x] 2.2 Implement `DialogueRules.visible_questions()` and `DialogueRules.answer()` with GUT tests over seeds 1–300: "holds" exactly when the NPC is the fact's holder, correct attitude line, fact-less questions never reveal, locked questions hidden until any `unlock_any` fact is revealed and then shown in data order, same list for every root cause; verify RED then GREEN
 - [x] 2.3 Write `game/dialogue/dialogue_offline.json` for Linh (attitudes defensive, honest) and Trang (honest): 6–8 questions each, one per fact the NPC can hold, small talk, 1–2 locked follow-ups, all fictional, non-answers written as deflections; verify a GUT test loads it against the template and checks every fact Linh or Trang can hold has a question for that NPC
-- [ ] 2.4 Harry content check: read the questions and both answer versions; confirm the "does not hold" lines never contradict the case and no line gives away the root cause; verify Harry's OK is recorded in the change notes
+- [x] 2.4 Harry content check: read the questions and both answer versions; confirm the "does not hold" lines never contradict the case and no line gives away the root cause; verify Harry's OK is recorded in the change notes
 
 ## 3. Asking in the run
 
