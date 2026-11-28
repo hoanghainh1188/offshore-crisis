@@ -1,6 +1,6 @@
 # Offshore Crisis — Game Design Document v0.1
 
-> Status: Draft v0.1 (2026-11-27).
+> Status: Draft v0.1 (2026-11-27). Updated 2026-11-28: remote call cost (§7).
 
 ---
 
@@ -111,7 +111,9 @@ Each NPC has:
 ## 7. Dialogue system
 
 - The player **picks questions** from a list. No free-text questions in MVP.
-- Each question costs in-game time (default: 15 in-game minutes).
+- Each question costs in-game time the first time it is asked (default: 15 in-game minutes). Asking it again is free.
+- Questions to Tanaka-san over the Meeting Room Screen cost more (default: 30 in-game minutes), because the client's time is limited. Opening the call costs nothing extra.
+- Exact values live in data and are tuned in playtests.
 - The game sends the backend: NPC profile, knowledge slice, attitude, question, and short conversation history.
 - The LLM returns a short in-character answer **plus structured tags**:
 
