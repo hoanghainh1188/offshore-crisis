@@ -14,6 +14,8 @@ var truth_sheet: TruthSheet = null
 var revealed_fact_ids: Array[StringName] = []
 ## Question ids asked this run; asking one again is free (specs/npc-dialogue).
 var asked_question_ids: Array[StringName] = []
+## Pins and links on the clue board; read by later screens, never scored (specs/clue-board).
+var clue_board: ClueBoardState = ClueBoardState.new()
 var dialogue_tuning: DialogueTuning = preload("res://dialogue/dialogue_tuning.tres")
 
 var _template: CaseTemplate = null
@@ -29,6 +31,7 @@ func reset_run() -> void:
 	truth_sheet = null
 	revealed_fact_ids = []
 	asked_question_ids = []
+	clue_board = ClueBoardState.new()
 
 
 ## Generates this run's Truth Sheet and logs only the seed.
@@ -36,6 +39,7 @@ func start_case(seed_value: int) -> void:
 	truth_sheet = CaseGenerator.new().generate(case_template(), seed_value)
 	revealed_fact_ids = []
 	asked_question_ids = []
+	clue_board = ClueBoardState.new()
 	print(CaseLog.format(seed_value))
 
 

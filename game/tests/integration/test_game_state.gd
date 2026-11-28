@@ -28,3 +28,22 @@ func test_reset_run_gives_fresh_clock() -> void:
 	GameState.clock.start(10.0)
 	GameState.reset_run()
 	assert_false(GameState.clock.is_started())
+
+
+func test_new_run_clears_the_clue_board() -> void:
+	GameState.start_case(42)
+	var ids: Array[StringName] = []
+	for fact: CaseTemplate.Fact in GameState.truth_sheet.chain:
+		GameState.reveal_fact(fact.id)
+		ids.append(fact.id)
+	GameState.clue_board.pin(ids[0], Vector2(5, 5), GameState.revealed_fact_ids)
+	GameState.clue_board.pin(ids[1], Vector2(50, 5), GameState.revealed_fact_ids)
+	GameState.clue_board.select(ids[0])
+	GameState.clue_board.select(ids[1])
+	GameState.start_case(43)
+	assert_eq(GameState.clue_board.pinned_ids().size(), 0)
+	assert_eq(GameState.clue_board.links().size(), 0)
+	assert_eq(GameState.clue_board.tray_ids(GameState.revealed_fact_ids).size(), 0)
+	GameState.clue_board.pin(ids[0], Vector2.ZERO, ids)
+	GameState.reset_run()
+	assert_eq(GameState.clue_board.pinned_ids().size(), 0)
