@@ -1,7 +1,8 @@
 """Rebuild game/fonts/noto_sans_jp_subset.ttf from the official Noto Sans JP variable font.
 
-Keeps Latin, punctuation, kana and every CJK character used in the game's JSON data, so
-Japanese terms render on the web build without shipping the full ~10 MB font.
+Keeps Latin, punctuation, kana, every CJK character used in the game's JSON data and every
+non-ASCII UI mark used in game scripts (for example the dialogue's ✓), so they render on the
+web build (no system font fallback) without shipping the full ~10 MB font.
 
 Usage (fonttools in a throwaway venv, not a project dependency):
     python3 -m venv /tmp/fontvenv && /tmp/fontvenv/bin/pip install "fonttools>=4,<5"
@@ -9,7 +10,7 @@ Usage (fonttools in a throwaway venv, not a project dependency):
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notosansjp/NotoSansJP%5Bwght%5D.ttf"
     /tmp/fontvenv/bin/python tools/subset_jp_font.py /tmp/NotoSansJP-VF.ttf
 
-Run it again whenever new Japanese text is added to the data files; the GUT test
+Run it again whenever new Japanese text or a new non-ASCII UI mark is added; the GUT test
 test_jp_font_coverage.gd fails until you do.
 """
 
@@ -22,6 +23,9 @@ from fontTools.varLib import instancer
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA_GLOBS = ["game/case/templates/*.json", "game/artifacts/*.json", "game/dialogue/*.json"]
+# Game scripts may hold UI marks; addons and tests are not shown to the player.
+SCRIPT_GLOB = "game/**/*.gd"
+SKIPPED_SCRIPT_DIRS = ("game/addons/", "game/tests/")
 OUTPUT = ROOT / "game/fonts/noto_sans_jp_subset.ttf"
 
 # Latin, Latin-1, general punctuation, CJK punctuation, kana, full-width forms.
@@ -43,11 +47,20 @@ def data_characters() -> set[int]:
     return codepoints
 
 
+def script_marks() -> set[int]:
+    codepoints: set[int] = set()
+    for path in sorted(ROOT.glob(SCRIPT_GLOB)):
+        if path.relative_to(ROOT).as_posix().startswith(SKIPPED_SCRIPT_DIRS):
+            continue
+        codepoints.update(ord(c) for c in path.read_text(encoding="utf-8") if ord(c) > 0x7E)
+    return codepoints
+
+
 def main(source: str) -> None:
     font = TTFont(source)
     # Pin the variable font to Regular so the subset is a plain static font.
     font = instancer.instantiateVariableFont(font, {"wght": 400}, updateFontNames=True)
-    unicodes = set(data_characters())
+    unicodes = data_characters() | script_marks()
     for start, end in BASE_RANGES:
         unicodes.update(range(start, end + 1))
     options = subset.Options()
