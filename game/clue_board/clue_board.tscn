@@ -1,0 +1,113 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://clue_board/clue_board.gd" id="1_board"]
+[ext_resource type="Theme" path="res://artifacts/viewer_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://clue_board/clue_board_area.gd" id="3_area"]
+
+[sub_resource type="StyleBoxFlat" id="Style_Panel"]
+bg_color = Color(0.96, 0.95, 0.92, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.32, 0.34, 0.4, 1)
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="Style_Cork"]
+bg_color = Color(0.72, 0.58, 0.42, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.45, 0.34, 0.22, 1)
+
+[node name="ClueBoard" type="CanvasLayer"]
+layer = 6
+script = ExtResource("1_board")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.12, 0.12, 0.14, 0.7)
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 48.0
+offset_right = -16.0
+offset_bottom = -12.0
+theme = ExtResource("2_theme")
+theme_override_styles/panel = SubResource("Style_Panel")
+
+[node name="Rows" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Header" type="HBoxContainer" parent="Panel/Rows"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/Rows/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.12, 0.12, 1)
+theme_override_font_sizes/font_size = 13
+text = "Clue board"
+
+[node name="CountLabel" type="Label" parent="Panel/Rows/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.32, 0.34, 0.4, 1)
+
+[node name="CloseButton" type="Button" parent="Panel/Rows/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Close (C / Esc)"
+
+[node name="Columns" type="HBoxContainer" parent="Panel/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="Tray" type="VBoxContainer" parent="Panel/Rows/Columns"]
+custom_minimum_size = Vector2(164, 0)
+layout_mode = 2
+
+[node name="TrayLabel" type="Label" parent="Panel/Rows/Columns/Tray"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.34, 0.4, 1)
+text = "New clues"
+
+[node name="EmptyLabel" type="Label" parent="Panel/Rows/Columns/Tray"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.34, 0.4, 1)
+text = "No clues found yet."
+autowrap_mode = 3
+
+[node name="Scroll" type="ScrollContainer" parent="Panel/Rows/Columns/Tray"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="TrayList" type="VBoxContainer" parent="Panel/Rows/Columns/Tray/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Cork" type="PanelContainer" parent="Panel/Rows/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("Style_Cork")
+
+[node name="BoardArea" type="Control" parent="Panel/Rows/Columns/Cork"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+script = ExtResource("3_area")

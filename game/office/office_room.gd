@@ -3,6 +3,7 @@ extends Node2D
 ## The single office room (GDD section 12). Places the player at the entrance on load and
 ## opens panels from targets: the Document Shelf and the PC Terminal open the artifact
 ## viewer (specs/artifact-viewer), NPCs with dialogue open the dialogue panel (specs/npc-dialogue).
+## The clue board opens with its own key, also over an open panel (specs/clue-board).
 
 @onready var _spawn: Marker2D = $EntranceSpawn
 @onready var _player: Player = $Player
@@ -10,6 +11,7 @@ extends Node2D
 @onready var _terminal: Interactable = $Interactables/PcTerminal
 @onready var _viewer: ArtifactViewer = $ArtifactViewer
 @onready var _dialogue: DialoguePanel = $DialoguePanel
+@onready var _board: ClueBoard = $ClueBoard
 
 
 func _ready() -> void:
@@ -20,6 +22,8 @@ func _ready() -> void:
 	_terminal.interacted.connect(_open_viewer.bind(_terminal.display_name))
 	_viewer.closed.connect(_unfreeze_player)
 	_dialogue.closed.connect(_unfreeze_player)
+	_board.opened.connect(_freeze_player)
+	_board.closed.connect(_unfreeze_player)
 	for node: Node in $Interactables.get_children():
 		var target: Interactable = node as Interactable
 		if target != null and target.kind == Interactable.Kind.NPC and _dialogue.has_dialogue(target.id):
@@ -42,5 +46,9 @@ func _freeze_player() -> void:
 	_player.process_mode = Node.PROCESS_MODE_DISABLED
 
 
+## The board can sit over a panel, so closing one of them must not free the player while
+## the other is still open.
 func _unfreeze_player() -> void:
+	if _viewer.is_open() or _dialogue.is_open() or _board.is_open():
+		return
 	_player.process_mode = Node.PROCESS_MODE_INHERIT
